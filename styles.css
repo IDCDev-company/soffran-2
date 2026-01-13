@@ -1434,16 +1434,22 @@ textarea.form-input {
         grid-template-columns: 1fr;
         gap: var(--spacing-md);
         margin-top: var(--spacing-lg);
+        justify-items: center;
+        text-align: center;
     }
     
     .feature-item {
         padding: var(--spacing-sm);
-        align-items: flex-start;
         text-align: left;
+        align-items: center;
+        text-align: center;
     }
     
     .feature-icon {
         font-size: 1.5rem;
+        line-height: 1;         /* elimină offset vertical */
+        margin-bottom: 12px;    /* spațiu sub icon */
+        display: block;
     }
     
     /* Product Section */
