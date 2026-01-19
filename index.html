@@ -37,6 +37,7 @@
             <div class="nav-links">
                 <a href="#despre" class="nav-link">Despre</a>
                 <a href="#produs" class="nav-link">Produs</a>
+                <a href="#photo-gallery" class="nav-link">Galerie</a>
                 <a href="#certificate" class="nav-link">Certificări</a>
                 <a href="#achizitie" class="nav-link">Achiziție</a>
                 <a href="#contact" class="nav-link">Contact</a>
@@ -211,6 +212,105 @@
             </div>
         </div>
     </section>
+
+    <!-- Photo Gallery Section -->
+    <section class="photo-gallery" id="photo-gallery">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Galerie</span>
+                <h2 class="section-title">Galerie Foto</h2>
+            </div>
+            
+            <div class="photo-gallery-wrapper">
+                <!-- Main Image Display -->
+                <div class="photo-main-container">
+                    <div class="photo-main-wrapper">
+                        <img src="img/IMG_8720.jpg" alt="Șofran Premium Bio VV Gold Saffron" class="photo-main-image" id="mainPhoto" loading="lazy">
+                        <div class="photo-main-overlay">
+                            <button class="photo-fullscreen-btn" aria-label="Vizualizare completă">
+                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Thumbnail Navigation -->
+                <div class="photo-thumbnails">
+                    <button class="photo-nav-btn photo-nav-prev" aria-label="Anterior">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    </button>
+                    
+                    <div class="photo-thumbnails-scroll">
+                        <div class="photo-thumbnails-container">
+                            <div class="photo-thumbnail active" data-index="0">
+                                <img src="img/IMG_8720.jpg" alt="Thumbnail 1" loading="lazy">
+                            </div>
+                            <div class="photo-thumbnail" data-index="1">
+                                <img src="img/saffron-p.webp" alt="Thumbnail 2" loading="lazy">
+                            </div>
+                            <div class="photo-thumbnail" data-index="2">
+                                <img src="img/saffron-p-removebg-preview.png" alt="Thumbnail 3" loading="lazy">
+                            </div>
+                            <div class="photo-thumbnail" data-index="3">
+                                <img src="img/IMG_8720.jpg" alt="Thumbnail 4" loading="lazy">
+                            </div>
+                            <div class="photo-thumbnail" data-index="4">
+                                <img src="img/saffron-p.webp" alt="Thumbnail 5" loading="lazy">
+                            </div>
+                            <div class="photo-thumbnail" data-index="5">
+                                <img src="img/saffron-p-removebg-preview.png" alt="Thumbnail 6" loading="lazy">
+                            </div>
+                            <div class="photo-thumbnail" data-index="6">
+                                <img src="img/IMG_8720.jpg" alt="Thumbnail 7" loading="lazy">
+                            </div>
+                            <div class="photo-thumbnail" data-index="7">
+                                <img src="img/saffron-p.webp" alt="Thumbnail 8" loading="lazy">
+                            </div>
+                            <div class="photo-thumbnail" data-index="8">
+                                <img src="img/saffron-p-removebg-preview.png" alt="Thumbnail 9" loading="lazy">
+                            </div>
+                            <div class="photo-thumbnail" data-index="9">
+                                <img src="img/IMG_8720.jpg" alt="Thumbnail 10" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="photo-nav-btn photo-nav-next" aria-label="Următor">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" aria-label="Închide lightbox">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+        <button class="lightbox-prev" aria-label="Imaginea anterioară">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </button>
+        <button class="lightbox-next" aria-label="Imaginea următoare">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+        </button>
+        <div class="lightbox-content">
+            <img src="" alt="" class="lightbox-image" id="lightboxImage">
+        </div>
+    </div>
 
     <!-- Gallery Section -->
     <section class="gallery-section" id="gallery">
