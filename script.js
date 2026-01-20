@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
     
     // Observă elementele care trebuie animate
-    const animateElements = document.querySelectorAll('.about-text, .product-showcase, .purchase-form-container, .certificates-content, .contact-content');
+    const animateElements = document.querySelectorAll('.about-text, .benefits-grid, .product-showcase, .purchase-form-container, .certificates-content, .contact-content');
     
     animateElements.forEach(element => {
         element.style.opacity = '0';
