@@ -2229,6 +2229,94 @@ textarea.form-input {
         font-size: 1.5rem;
     }
     
+    /* Awards Bookmark Mobile */
+    .awards-bookmark {
+        top: 20%;
+        right: var(--spacing-md);
+        transform: none;
+    }
+    
+    .bookmark-tab {
+        min-width: 44px;
+        min-height: 44px;
+        padding: var(--spacing-sm);
+        border-radius: 50%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .bookmark-tab:hover {
+        transform: translateY(-2px);
+    }
+    
+    .bookmark-text {
+        writing-mode: horizontal-tb;
+        text-orientation: mixed;
+        transform: none;
+        font-size: 0.65rem;
+    }
+    
+    .bookmark-indicator {
+        display: none;
+    }
+    
+    .awards-bookmark.open .awards-panel {
+        width: 100vw;
+        max-width: 100vw;
+        right: 0;
+        left: 0;
+    }
+    
+    .awards-panel-inner {
+        width: 100%;
+        max-width: 100%;
+        padding: var(--spacing-md);
+    }
+    
+    .awards-header {
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .awards-title {
+        font-size: 1.35rem;
+    }
+    
+    .award-item {
+        flex-direction: column;
+        gap: var(--spacing-md);
+        padding: var(--spacing-sm);
+    }
+    
+    .award-image {
+        width: 100%;
+        height: 220px;
+        max-width: 100%;
+        min-width: 100%;
+        margin: 0 auto;
+    }
+    
+    .award-info h3 {
+        font-size: 1rem;
+    }
+    
+    .award-year {
+        font-size: 0.7rem;
+    }
+    
+    .award-info p {
+        font-size: 0.85rem;
+    }
+    
+    .award-lightbox {
+        padding: var(--spacing-sm);
+    }
+    
+    .award-lightbox-close {
+        top: var(--spacing-sm);
+        right: var(--spacing-sm);
+        width: 36px;
+        height: 36px;
+    }
+    
     /* Contact */
     .contact-content {
         padding: 0;
@@ -2531,6 +2619,375 @@ textarea.form-input {
     .cards li {
         width: 200px;
         height: 355px;
+    }
+}
+
+/* ============================================
+   AWARDS BOOKMARK - ELEGANT PAGE PULL
+   ============================================ */
+
+.awards-bookmark {
+    position: fixed;
+    right: 0;
+    top: 25%;
+    z-index: 998;
+    display: flex;
+    align-items: center;
+}
+
+.bookmark-tab {
+    background: var(--color-black);
+    border: none;
+    border-radius: 0;
+    padding: var(--spacing-md) var(--spacing-sm);
+    cursor: pointer;
+    box-shadow: -1px 0 8px rgba(0, 0, 0, 0.08);
+    transition: var(--transition-fast);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    min-width: 50px;
+    z-index: 2;
+}
+
+.bookmark-tab:hover {
+    background-color: var(--color-black-matte);
+    box-shadow: -2px 0 12px rgba(0, 0, 0, 0.12);
+}
+
+.bookmark-tab:active {
+    background-color: var(--color-black);
+}
+
+.bookmark-text {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--color-white);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    white-space: nowrap;
+    transition: var(--transition-fast);
+}
+
+.bookmark-indicator {
+    width: 1px;
+    height: 16px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 0;
+    transition: var(--transition-fast);
+}
+
+.bookmark-tab:hover .bookmark-indicator {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.awards-panel {
+    position: fixed;
+    right: 0;
+    top: 80px;
+    width: 0;
+    height: calc(100vh - 80px);
+    background-color: var(--color-white);
+    box-shadow: -2px 0 20px rgba(0, 0, 0, 0.08);
+    z-index: 997;
+    overflow: hidden;
+    transition: width 0.5s ease;
+    will-change: width;
+    border-radius: 0;
+}
+
+.awards-bookmark.open .awards-panel {
+    width: 650px;
+    max-width: 85vw;
+}
+
+.awards-panel-inner {
+    width: 650px;
+    max-width: 85vw;
+    height: 100%;
+    padding: var(--spacing-lg) var(--spacing-md) var(--spacing-xl);
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s;
+    position: relative;
+}
+
+.awards-bookmark.open .awards-panel-inner {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.awards-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-gray-medium);
+}
+
+.awards-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--color-black);
+    margin: 0;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+.awards-close {
+    background: transparent;
+    border: 1px solid var(--color-gray-medium);
+    border-radius: 2px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    color: var(--color-black-matte);
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.awards-close:hover {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border-color: var(--color-black);
+}
+
+.awards-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    width: 100%;
+    min-height: 100%;
+    position: relative;
+    padding-bottom: var(--spacing-md);
+}
+
+.award-item {
+    display: flex;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-gray-light);
+    background-color: transparent;
+    transition: var(--transition-fast);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.award-item:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.award-item:hover {
+    border-bottom-color: var(--color-gray-medium);
+}
+
+.award-image {
+    flex-shrink: 0;
+    width: 140px;
+    height: 140px;
+    min-width: 140px;
+    border-radius: 2px;
+    overflow: hidden;
+    border: 1px solid var(--color-gray-medium);
+    cursor: pointer;
+    position: relative;
+    background-color: var(--color-white);
+    transition: var(--transition-fast);
+}
+
+.award-image:hover {
+    border-color: var(--color-black-matte);
+}
+
+.award-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+}
+
+.award-zoom-hint {
+    position: absolute;
+    top: var(--spacing-xs);
+    right: var(--spacing-xs);
+    width: 24px;
+    height: 24px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+    opacity: 0;
+    transition: var(--transition-fast);
+    pointer-events: none;
+}
+
+.award-image:hover .award-zoom-hint {
+    opacity: 1;
+}
+
+.award-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.award-info h3 {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-black);
+    margin: 0 0 var(--spacing-xs) 0;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+}
+
+.award-year {
+    display: inline-block;
+    font-size: 0.7rem;
+    color: var(--color-black-matte);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0.02em;
+    margin-bottom: var(--spacing-sm);
+    padding: 0;
+    background-color: transparent;
+    border-radius: 0;
+    width: fit-content;
+}
+
+.award-info p {
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--color-gray-dark);
+    margin: 0;
+    flex: 1;
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    font-weight: 300;
+}
+
+/* Award Lightbox */
+.award-lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 10000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(10px);
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+    box-sizing: border-box;
+}
+
+.award-lightbox.active {
+    display: flex;
+    opacity: 1;
+}
+
+.award-lightbox-close {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    width: 44px;
+    height: 44px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    color: var(--color-white);
+    padding: 0;
+    z-index: 10001;
+    backdrop-filter: blur(10px);
+}
+
+.award-lightbox-close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: var(--color-saffron);
+    transform: rotate(90deg) scale(1.1);
+}
+
+.award-lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.award-lightbox-content img {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: lightboxFadeIn 0.3s ease;
+}
+
+@keyframes lightboxFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Overlay pentru blur background când panel-ul este deschis */
+.awards-bookmark.open::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(1px);
+    z-index: 996;
+    pointer-events: auto;
+    opacity: 0;
+    animation: fadeInOverlay 0.4s ease forwards;
+}
+
+@keyframes fadeInOverlay {
+    to {
+        opacity: 1;
     }
 }
 

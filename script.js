@@ -992,6 +992,104 @@ document.addEventListener('DOMContentLoaded', function() {
     updateVideos();
 });
 
+// ============================================
+// AWARDS BOOKMARK FUNCTIONALITY
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    const awardsBookmark = document.getElementById('awardsBookmark');
+    const bookmarkTab = document.getElementById('bookmarkTab');
+    const awardsPanel = document.getElementById('awardsPanel');
+    const awardsClose = document.getElementById('awardsClose');
+    const awardLightbox = document.getElementById('awardLightbox');
+    const awardLightboxClose = document.getElementById('awardLightboxClose');
+    const awardLightboxImage = document.getElementById('awardLightboxImage');
+    
+    if (!awardsBookmark || !bookmarkTab) return;
+    
+    // Toggle panel
+    bookmarkTab.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (awardsBookmark.classList.contains('open')) {
+            closeAwardsPanel();
+        } else {
+            openAwardsPanel();
+        }
+    });
+    
+    // Close panel
+    if (awardsClose) {
+        awardsClose.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeAwardsPanel();
+        });
+    }
+    
+    // Close on click outside
+    document.addEventListener('click', function(e) {
+        if (awardsBookmark.classList.contains('open')) {
+            if (!awardsBookmark.contains(e.target) && !awardLightbox.contains(e.target)) {
+                closeAwardsPanel();
+            }
+        }
+    });
+    
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            if (awardLightbox.classList.contains('active')) {
+                closeAwardLightbox();
+            } else if (awardsBookmark.classList.contains('open')) {
+                closeAwardsPanel();
+            }
+        }
+    });
+    
+    function openAwardsPanel() {
+        awardsBookmark.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeAwardsPanel() {
+        awardsBookmark.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    
+    // Award Lightbox
+    window.openAwardLightbox = function(imageSrc, imageAlt) {
+        if (awardLightboxImage) {
+            awardLightboxImage.src = imageSrc;
+            awardLightboxImage.alt = imageAlt || 'Trofee';
+        }
+        awardLightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    };
+    
+    function closeAwardLightbox() {
+        awardLightbox.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    
+    if (awardLightboxClose) {
+        awardLightboxClose.addEventListener('click', closeAwardLightbox);
+    }
+    
+    if (awardLightbox) {
+        awardLightbox.addEventListener('click', function(e) {
+            if (e.target === awardLightbox) {
+                closeAwardLightbox();
+            }
+        });
+    }
+    
+    // Prevent panel from closing when clicking inside
+    if (awardsPanel) {
+        awardsPanel.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+});
+
 // Export pentru utilizare în alte module (dacă este necesar)
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
