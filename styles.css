@@ -2371,19 +2371,27 @@ textarea.form-input {
     
     /* Awards Bookmark Mobile */
     .awards-bookmark {
-        top: 20%;
+        top: calc(25% - 24px);
         right: var(--spacing-md);
-        transform: none;
+        justify-content: flex-end;
+        margin: 0;
+        padding: 0;
     }
     
     .bookmark-tab {
+        width: 48px;
+        height: 48px;
         min-width: 48px;
+        max-width: 48px;
         min-height: 48px;
-        padding: var(--spacing-sm);
+        max-height: 48px;
+        padding: 0;
+        margin: 0;
         border-radius: 50%;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         -webkit-tap-highlight-color: transparent;
         touch-action: manipulation;
+        box-sizing: border-box;
     }
     
     .bookmark-tab:active {
@@ -2394,8 +2402,21 @@ textarea.form-input {
     .bookmark-text {
         writing-mode: horizontal-tb;
         text-orientation: mixed;
-        transform: none;
+        white-space: nowrap;
         font-size: 0.65rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        line-height: 1;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
     
     .bookmark-indicator {
@@ -2444,16 +2465,15 @@ textarea.form-input {
     
     .award-item {
         flex-direction: column;
-        gap: var(--spacing-md);
-        padding: var(--spacing-sm);
+        gap: 0;
+        padding: var(--spacing-lg) 0;
     }
     
     .award-image {
         width: 100%;
-        height: 220px;
-        max-width: 100%;
-        min-width: 100%;
-        margin: 0 auto;
+        min-height: 250px;
+        max-height: 400px;
+        margin-bottom: var(--spacing-md);
     }
     
     .award-info h3 {
@@ -2468,38 +2488,96 @@ textarea.form-input {
         font-size: 0.85rem;
     }
     
-    /* Certificates Bookmark Mobile */
-    .certificates-bookmark {
-        top: 120px;
+    /* Press Bookmark Mobile */
+    .press-bookmark {
+        top: calc(50% - 24px);
         right: var(--spacing-md);
-        transform: none;
+        justify-content: flex-end;
+        margin: 0;
+        padding: 0;
     }
     
-    .certificates-bookmark .bookmark-tab {
-        min-width: 48px;
-        min-height: 48px;
-        padding: var(--spacing-sm);
-        border-radius: 50%;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    /* Press bookmark uses common .bookmark-tab styles for mobile - no override needed */
+    
+    .press-panel {
+        top: 0;
+        height: 100vh;
+        left: 0;
+        right: auto;
+        transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        -webkit-overflow-scrolling: touch;
+        box-shadow: 2px 0 20px rgba(0, 0, 0, 0.08);
+        will-change: width;
+    }
+    
+    .press-bookmark.open .press-panel {
+        width: 100vw;
+        max-width: 100vw;
+        left: 0;
+        right: auto;
+    }
+    
+    .press-panel-inner {
+        width: 100%;
+        max-width: 100%;
+        padding: var(--spacing-md);
+        transform: translateX(-20px);
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .press-bookmark.open .press-panel-inner {
+        transform: translateX(0);
+        transition: opacity 0.3s ease 0.15s, transform 0.3s ease 0.15s;
+    }
+    
+    .press-item {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-md) 0;
+    }
+    
+    .press-info h3 {
+        font-size: 1rem;
+    }
+    
+    .press-info p {
+        font-size: 0.8rem;
+    }
+    
+    .press-close {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
         -webkit-tap-highlight-color: transparent;
         touch-action: manipulation;
     }
     
-    .certificates-bookmark .bookmark-tab:active {
-        transform: scale(0.95);
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    .press-close:active {
+        transform: scale(0.9);
     }
     
-    .certificates-bookmark .bookmark-text {
-        writing-mode: horizontal-tb;
-        text-orientation: mixed;
-        transform: none;
-        font-size: 0.65rem;
+    .press-link {
+        min-height: 44px;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
     }
     
-    .certificates-bookmark .bookmark-indicator {
-        display: none;
+    .press-link:active {
+        transform: scale(0.98);
     }
+
+    /* Certificates Bookmark Mobile */
+    .certificates-bookmark {
+        top: calc(75% - 24px);
+        right: var(--spacing-md);
+        justify-content: flex-end;
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* Certificates bookmark uses common .bookmark-tab styles for mobile - no override needed */
     
     .certificates-panel {
         top: 0;
@@ -2535,23 +2613,12 @@ textarea.form-input {
     
     .certificate-item {
         flex-direction: column;
-        gap: var(--spacing-md);
-        padding: var(--spacing-sm) 0;
-    }
-    
-    .certificate-icon {
-        width: 40px;
-        height: 40px;
-        min-width: 40px;
-    }
-    
-    .certificate-icon svg {
-        width: 20px;
-        height: 20px;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-md) 0;
     }
     
     .certificate-info h3 {
-        font-size: 0.95rem;
+        font-size: 1rem;
     }
     
     .certificate-info p {
@@ -2892,17 +2959,20 @@ textarea.form-input {
     
     /* Optimize panel animations for mobile */
     .awards-panel,
+    .press-panel,
     .certificates-panel {
         transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         -webkit-overflow-scrolling: touch;
     }
     
     .awards-panel-inner,
+    .press-panel-inner,
     .certificates-panel-inner {
         transition: opacity 0.25s ease, transform 0.25s ease;
     }
     
     .awards-bookmark.open .awards-panel-inner,
+    .press-bookmark.open .press-panel-inner,
     .certificates-bookmark.open .certificates-panel-inner {
         transition: opacity 0.3s ease 0.15s, transform 0.3s ease 0.15s;
     }
@@ -2959,17 +3029,21 @@ textarea.form-input {
 .awards-bookmark {
     position: fixed;
     right: 0;
-    top: 25%;
+    top: calc(25% - 60px);
     z-index: 998;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
 }
 
 .bookmark-tab {
     background: var(--color-black);
     border: none;
     border-radius: 0;
-    padding: var(--spacing-md) var(--spacing-sm);
+    padding: 0;
+    margin: 0;
     cursor: pointer;
     box-shadow: -1px 0 8px rgba(0, 0, 0, 0.08);
     transition: var(--transition-fast);
@@ -2977,9 +3051,16 @@ textarea.form-input {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--spacing-xs);
+    justify-content: center;
+    gap: 0;
+    width: 50px;
+    height: 120px;
     min-width: 50px;
+    max-width: 50px;
+    min-height: 120px;
+    max-height: 120px;
     z-index: 2;
+    box-sizing: border-box;
 }
 
 .bookmark-tab:hover {
@@ -3000,9 +3081,21 @@ textarea.form-input {
     text-transform: uppercase;
     writing-mode: vertical-rl;
     text-orientation: mixed;
-    transform: rotate(180deg);
     white-space: nowrap;
     transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(180deg);
 }
 
 .bookmark-indicator {
@@ -3011,6 +3104,12 @@ textarea.form-input {
     background-color: rgba(255, 255, 255, 0.2);
     border-radius: 0;
     transition: var(--transition-fast);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    padding: 0;
 }
 
 .bookmark-tab:hover .bookmark-indicator {
@@ -3042,7 +3141,7 @@ textarea.form-input {
     width: 650px;
     max-width: 85vw;
     height: 100%;
-    padding: var(--spacing-lg) var(--spacing-md) var(--spacing-xl);
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-md);
     overflow-y: auto;
     overflow-x: hidden;
     box-sizing: border-box;
@@ -3063,8 +3162,8 @@ textarea.form-input {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: var(--spacing-lg);
-    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
     border-bottom: 1px solid var(--color-gray-medium);
 }
 
@@ -3103,16 +3202,17 @@ textarea.form-input {
 .awards-content {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
+    gap: 0;
     width: 100%;
     min-height: 100%;
     position: relative;
-    padding-bottom: var(--spacing-md);
+    padding-bottom: 0;
 }
 
 .award-item {
     display: flex;
-    gap: var(--spacing-lg);
+    flex-direction: column;
+    gap: 0;
     padding: var(--spacing-md) 0;
     border-bottom: 1px solid var(--color-gray-light);
     background-color: transparent;
@@ -3124,6 +3224,7 @@ textarea.form-input {
 .award-item:last-child {
     margin-bottom: 0;
     border-bottom: none;
+    padding-bottom: 0;
 }
 
 .award-item:hover {
@@ -3131,26 +3232,29 @@ textarea.form-input {
 }
 
 .award-image {
-    flex-shrink: 0;
-    width: 140px;
-    height: 140px;
-    min-width: 140px;
-    border-radius: 2px;
-    overflow: hidden;
-    border: 1px solid var(--color-gray-medium);
+    width: 100%;
+    height: auto;
+    max-height: 450px;
+    overflow: visible;
+    border: none;
     cursor: pointer;
     position: relative;
-    background-color: var(--color-white);
+    background-color: var(--color-gray-light);
     transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-sm);
 }
 
 .award-image:hover {
-    border-color: var(--color-black-matte);
+    opacity: 0.95;
 }
 
 .award-image img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    max-height: 450px;
     object-fit: contain;
     object-position: center;
     display: block;
@@ -3158,12 +3262,12 @@ textarea.form-input {
 
 .award-zoom-hint {
     position: absolute;
-    top: var(--spacing-xs);
-    right: var(--spacing-xs);
-    width: 24px;
-    height: 24px;
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 2px;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    width: 32px;
+    height: 32px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3178,48 +3282,38 @@ textarea.form-input {
 }
 
 .award-info {
-    flex: 1;
-    min-width: 0;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    max-width: 100%;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    gap: var(--spacing-xs);
 }
 
 .award-info h3 {
     font-family: var(--font-serif);
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 1.125rem;
+    font-weight: 600;
     color: var(--color-black);
-    margin: 0 0 var(--spacing-xs) 0;
-    line-height: 1.4;
+    margin: 0;
+    line-height: 1.3;
     letter-spacing: -0.01em;
 }
 
 .award-year {
     display: inline-block;
-    font-size: 0.7rem;
-    color: var(--color-black-matte);
+    font-size: 0.75rem;
+    color: var(--color-gray-dark);
     font-weight: 400;
-    text-transform: none;
-    letter-spacing: 0.02em;
-    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
     padding: 0;
-    background-color: transparent;
-    border-radius: 0;
-    width: fit-content;
 }
 
 .award-info p {
-    font-size: 0.8rem;
-    line-height: 1.7;
+    font-size: 0.875rem;
+    line-height: 1.6;
     color: var(--color-gray-dark);
-    margin: 0;
-    flex: 1;
-    max-width: 100%;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    margin: var(--spacing-xs) 0 0 0;
     font-weight: 300;
 }
 
@@ -3302,27 +3396,6 @@ textarea.form-input {
     }
 }
 
-/* Overlay pentru blur background când panel-ul este deschis */
-.awards-bookmark.open::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.03);
-    backdrop-filter: blur(1px);
-    z-index: 996;
-    pointer-events: auto;
-    opacity: 0;
-    animation: fadeInOverlay 0.4s ease forwards;
-}
-
-@keyframes fadeInOverlay {
-    to {
-        opacity: 1;
-    }
-}
 
 /* ============================================
    UTILITY CLASSES
@@ -3337,70 +3410,240 @@ textarea.form-input {
 }
 
 /* ============================================
+   PRESS BOOKMARK - ELEGANT PAGE PULL
+   ============================================ */
+
+.press-bookmark {
+    position: fixed;
+    right: 0;
+    top: calc(50% - 60px);
+    z-index: 998;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+}
+
+/* Press bookmark uses common .bookmark-tab and .bookmark-indicator styles - no override needed */
+
+.press-panel {
+    position: fixed;
+    left: 0;
+    top: 80px;
+    width: 0;
+    height: calc(100vh - 80px);
+    background-color: var(--color-white);
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.08);
+    z-index: 997;
+    overflow: hidden;
+    transition: width 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: width;
+    border-radius: 0;
+    -webkit-overflow-scrolling: touch;
+}
+
+.press-bookmark.open .press-panel {
+    width: 650px;
+    max-width: 85vw;
+}
+
+.press-panel-inner {
+    width: 650px;
+    max-width: 85vw;
+    height: 100%;
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-md);
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+}
+
+.press-bookmark.open .press-panel-inner {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s;
+}
+
+.press-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-gray-medium);
+}
+
+.press-title {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--color-black);
+    margin: 0;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+.press-close {
+    background: transparent;
+    border: 1px solid var(--color-gray-medium);
+    border-radius: 2px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    color: var(--color-black-matte);
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.press-close:hover {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    border-color: var(--color-black);
+}
+
+.press-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 0;
+}
+
+.press-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-gray-light);
+    background-color: transparent;
+    transition: var(--transition-fast);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.press-item:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.press-item:hover {
+    border-bottom-color: var(--color-gray-medium);
+}
+
+.press-icon {
+    display: none;
+}
+
+.press-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.press-info h3 {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-black);
+    margin: 0;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+}
+
+.press-meta {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: baseline;
+    margin: 0;
+    flex-wrap: wrap;
+}
+
+.press-source {
+    font-size: 0.75rem;
+    color: var(--color-black-matte);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.press-date {
+    font-size: 0.75rem;
+    color: var(--color-gray-dark);
+    font-weight: 400;
+    letter-spacing: 0.05em;
+}
+
+.press-info p {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-gray-dark);
+    margin: var(--spacing-xs) 0 0 0;
+    font-weight: 300;
+}
+
+.press-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-size: 0.875rem;
+    color: var(--color-black);
+    text-decoration: none;
+    padding: var(--spacing-xs) 0;
+    border: none;
+    border-bottom: 1px solid var(--color-black);
+    transition: var(--transition-fast);
+    width: fit-content;
+    margin-top: var(--spacing-sm);
+    font-weight: 400;
+}
+
+.press-link:hover {
+    color: var(--color-gray-dark);
+    border-bottom-color: var(--color-gray-dark);
+}
+
+.press-link svg {
+    width: 14px;
+    height: 14px;
+    transition: var(--transition-fast);
+}
+
+.press-link:hover svg {
+    transform: translate(2px, -2px);
+}
+
+/* ============================================
    CERTIFICATES BOOKMARK - ELEGANT PAGE PULL
    ============================================ */
 
 .certificates-bookmark {
     position: fixed;
     right: 0;
-    top: 65%;
+    top: calc(75% - 60px);
     z-index: 998;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
 }
 
-.certificates-bookmark .bookmark-tab {
-    background: var(--color-black);
-    border: none;
-    border-radius: 0;
-    padding: var(--spacing-md) var(--spacing-sm);
-    cursor: pointer;
-    box-shadow: -1px 0 8px rgba(0, 0, 0, 0.08);
-    transition: var(--transition-fast);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-xs);
-    min-width: 50px;
-    z-index: 2;
-    height: auto;
-}
+/* Certificates bookmark uses common .bookmark-tab styles - no override needed */
 
-.certificates-bookmark .bookmark-tab:hover {
-    background-color: var(--color-black-matte);
-    box-shadow: -2px 0 12px rgba(0, 0, 0, 0.12);
-}
-
-.certificates-bookmark .bookmark-tab:active {
-    background-color: var(--color-black);
-}
-
-.certificates-bookmark .bookmark-text {
-    font-family: var(--font-sans);
-    font-size: 0.7rem;
-    font-weight: 400;
-    color: var(--color-white);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    transform: rotate(180deg);
-    white-space: nowrap;
-    transition: var(--transition-fast);
-}
-
-.certificates-bookmark .bookmark-indicator {
-    width: 1px;
-    height: 16px;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 0;
-    transition: var(--transition-fast);
-}
-
-.certificates-bookmark .bookmark-tab:hover .bookmark-indicator {
-    background-color: rgba(255, 255, 255, 0.4);
-}
+/* Certificates bookmark uses common .bookmark-tab and .bookmark-indicator styles - no override needed */
 
 .certificates-panel {
     position: fixed;
@@ -3427,7 +3670,7 @@ textarea.form-input {
     width: 650px;
     max-width: 85vw;
     height: 100%;
-    padding: var(--spacing-lg) var(--spacing-md) var(--spacing-xl);
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-md);
     overflow-y: auto;
     overflow-x: hidden;
     box-sizing: border-box;
@@ -3448,8 +3691,8 @@ textarea.form-input {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: var(--spacing-lg);
-    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
     border-bottom: 1px solid var(--color-gray-medium);
 }
 
@@ -3488,16 +3731,17 @@ textarea.form-input {
 .certificates-content {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
+    gap: 0;
     width: 100%;
     min-height: 100%;
     position: relative;
-    padding-bottom: var(--spacing-md);
+    padding-bottom: 0;
 }
 
 .certificate-item {
     display: flex;
-    gap: var(--spacing-lg);
+    flex-direction: column;
+    gap: 0;
     padding: var(--spacing-md) 0;
     border-bottom: 1px solid var(--color-gray-light);
     background-color: transparent;
@@ -3509,6 +3753,7 @@ textarea.form-input {
 .certificate-item:last-child {
     margin-bottom: 0;
     border-bottom: none;
+    padding-bottom: 0;
 }
 
 .certificate-item:hover {
@@ -3516,70 +3761,42 @@ textarea.form-input {
 }
 
 .certificate-icon {
-    flex-shrink: 0;
-    width: 48px;
-    height: 48px;
-    min-width: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--color-ivory);
-    border: 1px solid var(--color-gray-medium);
-    border-radius: 2px;
-    color: var(--color-black-matte);
-    transition: var(--transition-fast);
-}
-
-.certificate-item:hover .certificate-icon {
-    border-color: var(--color-black-matte);
-    background-color: var(--color-white);
-}
-
-.certificate-icon svg {
-    width: 24px;
-    height: 24px;
+    display: none;
 }
 
 .certificate-info {
-    flex: 1;
-    min-width: 0;
+    width: 100%;
     display: flex;
     flex-direction: column;
+    gap: var(--spacing-xs);
 }
 
 .certificate-info h3 {
     font-family: var(--font-serif);
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 1.125rem;
+    font-weight: 600;
     color: var(--color-black);
-    margin: 0 0 var(--spacing-xs) 0;
-    line-height: 1.4;
+    margin: 0;
+    line-height: 1.3;
     letter-spacing: -0.01em;
 }
 
 .certificate-type {
     display: inline-block;
-    font-size: 0.7rem;
-    color: var(--color-black-matte);
+    font-size: 0.75rem;
+    color: var(--color-gray-dark);
     font-weight: 400;
-    text-transform: none;
-    letter-spacing: 0.02em;
-    margin-bottom: var(--spacing-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
     padding: 0;
-    background-color: transparent;
-    border-radius: 0;
-    width: fit-content;
 }
 
 .certificate-info p {
-    font-size: 0.8rem;
-    line-height: 1.7;
+    font-size: 0.875rem;
+    line-height: 1.6;
     color: var(--color-gray-dark);
-    margin: 0 0 var(--spacing-sm) 0;
-    flex: 1;
-    max-width: 100%;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    margin: var(--spacing-xs) 0 0 0;
     font-weight: 300;
 }
 
@@ -3587,25 +3804,30 @@ textarea.form-input {
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-xs);
-    font-size: 0.8rem;
+    font-size: 0.875rem;
     color: var(--color-black);
     text-decoration: none;
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border: 1px solid var(--color-gray-medium);
-    border-radius: 2px;
+    padding: var(--spacing-xs) 0;
+    border: none;
+    border-bottom: 1px solid var(--color-black);
     transition: var(--transition-fast);
     width: fit-content;
-    margin-top: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
+    font-weight: 400;
 }
 
 .certificate-download:hover {
-    background-color: var(--color-black);
-    color: var(--color-white);
-    border-color: var(--color-black);
+    color: var(--color-gray-dark);
+    border-bottom-color: var(--color-gray-dark);
 }
 
 .certificate-download svg {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
+    transition: var(--transition-fast);
+}
+
+.certificate-download:hover svg {
+    transform: translateY(2px);
 }
 

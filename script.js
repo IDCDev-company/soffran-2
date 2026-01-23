@@ -65,7 +65,7 @@ function applyTranslations() {
             } else if (element.tagName === 'TITLE') {
                 element.textContent = translation;
             } else {
-                element.textContent = translation;
+                element.innerHTML = translation;
             }
         }
     });
@@ -1117,6 +1117,35 @@ document.addEventListener('DOMContentLoaded', function() {
     const awardLightbox = document.getElementById('awardLightbox');
     const awardLightboxClose = document.getElementById('awardLightboxClose');
     const awardLightboxImage = document.getElementById('awardLightboxImage');
+    const pressBookmark = document.getElementById('pressBookmark');
+    const certificatesBookmark = document.getElementById('certificatesBookmark');
+    
+    // Global functions for closing panels (accessible across all bookmarks)
+    function closePressPanel() {
+        if (!pressBookmark) return;
+        pressBookmark.classList.remove('open');
+        setTimeout(function() {
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            // Restore scroll position
+            window.scrollTo(0, scrollPosition);
+        }, 500);
+    }
+    
+    function closeCertificatesPanel() {
+        if (!certificatesBookmark) return;
+        certificatesBookmark.classList.remove('open');
+        setTimeout(function() {
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            // Restore scroll position
+            window.scrollTo(0, scrollPosition);
+        }, 500);
+    }
     
     if (!awardsBookmark || !bookmarkTab) return;
     
@@ -1127,6 +1156,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (awardsBookmark.classList.contains('open')) {
             closeAwardsPanel();
         } else {
+            // Close other panels if open
+            if (pressBookmark && pressBookmark.classList.contains('open')) {
+                closePressPanel();
+            }
+            if (certificatesBookmark && certificatesBookmark.classList.contains('open')) {
+                closeCertificatesPanel();
+            }
             openAwardsPanel();
         }
     }
@@ -1154,7 +1190,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Close on click outside
     document.addEventListener('click', function(e) {
         if (awardsBookmark.classList.contains('open')) {
-            if (!awardsBookmark.contains(e.target) && !awardLightbox.contains(e.target)) {
+            if (!awardsBookmark.contains(e.target) && !awardLightbox.contains(e.target) && (!pressBookmark || !pressBookmark.contains(e.target)) && (!certificatesBookmark || !certificatesBookmark.contains(e.target))) {
                 closeAwardsPanel();
             }
         }
@@ -1171,11 +1207,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // Store scroll position
+    let scrollPosition = 0;
+    
     function openAwardsPanel() {
+        // Save current scroll position
+        scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
         awardsBookmark.classList.add('open');
         document.body.style.overflow = 'hidden';
-        // Prevent body scroll on mobile
+        // Prevent body scroll and maintain scroll position
         document.body.style.position = 'fixed';
+        document.body.style.top = `-${scrollPosition}px`;
         document.body.style.width = '100%';
     }
     
@@ -1186,7 +1228,10 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(function() {
             document.body.style.overflow = '';
             document.body.style.position = '';
+            document.body.style.top = '';
             document.body.style.width = '';
+            // Restore scroll position
+            window.scrollTo(0, scrollPosition);
         }, 500);
     }
     
@@ -1225,10 +1270,96 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // ============================================
+    // PRESS BOOKMARK FUNCTIONALITY
+    // ============================================
+    
+    const pressTab = document.getElementById('pressTab');
+    const pressPanel = document.getElementById('pressPanel');
+    const pressClose = document.getElementById('pressClose');
+    
+    if (!pressBookmark || !pressTab) {
+        // Continue to certificates if press bookmark doesn't exist
+    } else {
+        // Toggle panel - Support for both click and touch
+        function handlePressToggle(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (pressBookmark.classList.contains('open')) {
+                closePressPanel();
+            } else {
+                // Close other panels if open
+                if (awardsBookmark && awardsBookmark.classList.contains('open')) {
+                    closeAwardsPanel();
+                }
+                if (certificatesBookmark && certificatesBookmark.classList.contains('open')) {
+                    closeCertificatesPanel();
+                }
+                openPressPanel();
+            }
+        }
+    
+        pressTab.addEventListener('click', handlePressToggle);
+        pressTab.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            handlePressToggle(e);
+        }, { passive: false });
+        
+        // Close panel - Support for both click and touch
+        if (pressClose) {
+            function handlePressClose(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                closePressPanel();
+            }
+            pressClose.addEventListener('click', handlePressClose);
+            pressClose.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                handlePressClose(e);
+            }, { passive: false });
+        }
+        
+        // Close on click outside
+        document.addEventListener('click', function(e) {
+            if (pressBookmark.classList.contains('open')) {
+                if (!pressBookmark.contains(e.target) && !awardLightbox.contains(e.target)) {
+                    closePressPanel();
+                }
+            }
+        });
+        
+        // Close on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (pressBookmark.classList.contains('open')) {
+                    closePressPanel();
+                }
+            }
+        });
+        
+        function openPressPanel() {
+            // Save current scroll position
+            scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+            pressBookmark.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            // Prevent body scroll and maintain scroll position
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollPosition}px`;
+            document.body.style.width = '100%';
+        }
+        
+        
+        // Prevent panel from closing when clicking inside
+        if (pressPanel) {
+            pressPanel.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
+    }
+    
+    // ============================================
     // CERTIFICATES BOOKMARK FUNCTIONALITY
     // ============================================
     
-    const certificatesBookmark = document.getElementById('certificatesBookmark');
     const certificatesTab = document.getElementById('certificatesTab');
     const certificatesPanel = document.getElementById('certificatesPanel');
     const certificatesClose = document.getElementById('certificatesClose');
@@ -1242,9 +1373,12 @@ document.addEventListener('DOMContentLoaded', function() {
         if (certificatesBookmark.classList.contains('open')) {
             closeCertificatesPanel();
         } else {
-            // Close awards panel if open
-            if (awardsBookmark.classList.contains('open')) {
+            // Close other panels if open
+            if (awardsBookmark && awardsBookmark.classList.contains('open')) {
                 closeAwardsPanel();
+            }
+            if (pressBookmark && pressBookmark.classList.contains('open')) {
+                closePressPanel();
             }
             openCertificatesPanel();
         }
@@ -1273,7 +1407,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Close on click outside
     document.addEventListener('click', function(e) {
         if (certificatesBookmark.classList.contains('open')) {
-            if (!certificatesBookmark.contains(e.target) && !awardLightbox.contains(e.target)) {
+            if (!certificatesBookmark.contains(e.target) && !awardLightbox.contains(e.target) && (!pressBookmark || !pressBookmark.contains(e.target))) {
                 closeCertificatesPanel();
             }
         }
@@ -1289,23 +1423,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     function openCertificatesPanel() {
+        // Save current scroll position
+        scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
         certificatesBookmark.classList.add('open');
         document.body.style.overflow = 'hidden';
-        // Prevent body scroll on mobile
+        // Prevent body scroll and maintain scroll position
         document.body.style.position = 'fixed';
+        document.body.style.top = `-${scrollPosition}px`;
         document.body.style.width = '100%';
     }
     
-    function closeCertificatesPanel() {
-        // Remove open class to trigger closing animation
-        certificatesBookmark.classList.remove('open');
-        // Wait for animation to complete before resetting body styles
-        setTimeout(function() {
-            document.body.style.overflow = '';
-            document.body.style.position = '';
-            document.body.style.width = '';
-        }, 500);
-    }
     
     // Prevent panel from closing when clicking inside
     if (certificatesPanel) {

@@ -14,7 +14,7 @@
     "contact": "Contact"
   },
   "hero": {
-    "title": "Welcome to Gold Saffron Bio",
+    "title": "Bine ați venit la<br>Gold Saffron Bio",
     "subtitle": "VV Gold Saffron Bio"
   },
   "stats": {
@@ -154,6 +154,26 @@
     "title": "Reach Out to Us",
     "phone": "Telefon",
     "email": "Email"
+  },
+  "press": {
+    "bookmarkText": "Presă",
+    "panelTitle": "Apariții în Presă",
+    "close": "Închide",
+    "press1Title": "Articol în Revista Culinară",
+    "press1Date": "Ianuarie 2025",
+    "press1Source": "Revista Culinară Premium",
+    "press1Desc": "VV Gold Saffron Bio a fost prezentat în articolul despre condimente premium și utilizarea lor în bucătăria modernă.",
+    "press1Link": "Citește articolul",
+    "press2Title": "Interviu despre Cultivarea Bio",
+    "press2Date": "Decembrie 2024",
+    "press2Source": "Agro Business Magazine",
+    "press2Desc": "Interviu exclusiv cu producătorii despre metodele de cultivare bio și certificarea europeană.",
+    "press2Link": "Citește interviul",
+    "press3Title": "Recenzie Produs Premium",
+    "press3Date": "Noiembrie 2024",
+    "press3Source": "Food & Wine Review",
+    "press3Desc": "Recenzie detaliată despre calitatea și aroma șofranului premium bio VV Gold.",
+    "press3Link": "Citește recenzia"
   },
   "footer": {
     "description": "Producător și furnizor de șofran premium bio certificat.",

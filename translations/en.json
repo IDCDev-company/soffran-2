@@ -14,7 +14,7 @@
     "contact": "Contact"
   },
   "hero": {
-    "title": "Welcome to Gold Saffron Bio",
+    "title": "Welcome to<br>Gold Saffron Bio",
     "subtitle": "VV Gold Saffron Bio"
   },
   "stats": {
@@ -154,6 +154,26 @@
     "title": "Reach Out to Us",
     "phone": "Phone",
     "email": "Email"
+  },
+  "press": {
+    "bookmarkText": "Press",
+    "panelTitle": "Press Appearances",
+    "close": "Close",
+    "press1Title": "Article in Culinary Magazine",
+    "press1Date": "January 2025",
+    "press1Source": "Premium Culinary Magazine",
+    "press1Desc": "VV Gold Saffron Bio was featured in an article about premium spices and their use in modern cuisine.",
+    "press1Link": "Read article",
+    "press2Title": "Interview on Organic Cultivation",
+    "press2Date": "December 2024",
+    "press2Source": "Agro Business Magazine",
+    "press2Desc": "Exclusive interview with producers about organic cultivation methods and European certification.",
+    "press2Link": "Read interview",
+    "press3Title": "Premium Product Review",
+    "press3Date": "November 2024",
+    "press3Source": "Food & Wine Review",
+    "press3Desc": "Detailed review about the quality and aroma of VV Gold premium organic saffron.",
+    "press3Link": "Read review"
   },
   "footer": {
     "description": "Producer and supplier of premium certified organic saffron.",
