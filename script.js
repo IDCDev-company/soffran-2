@@ -1007,22 +1007,35 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (!awardsBookmark || !bookmarkTab) return;
     
-    // Toggle panel
-    bookmarkTab.addEventListener('click', function(e) {
+    // Toggle panel - Support for both click and touch
+    function handleBookmarkToggle(e) {
+        e.preventDefault();
         e.stopPropagation();
         if (awardsBookmark.classList.contains('open')) {
             closeAwardsPanel();
         } else {
             openAwardsPanel();
         }
-    });
+    }
     
-    // Close panel
+    bookmarkTab.addEventListener('click', handleBookmarkToggle);
+    bookmarkTab.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        handleBookmarkToggle(e);
+    }, { passive: false });
+    
+    // Close panel - Support for both click and touch
     if (awardsClose) {
-        awardsClose.addEventListener('click', function(e) {
+        function handleClose(e) {
+            e.preventDefault();
             e.stopPropagation();
             closeAwardsPanel();
-        });
+        }
+        awardsClose.addEventListener('click', handleClose);
+        awardsClose.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            handleClose(e);
+        }, { passive: false });
     }
     
     // Close on click outside
@@ -1048,11 +1061,20 @@ document.addEventListener('DOMContentLoaded', function() {
     function openAwardsPanel() {
         awardsBookmark.classList.add('open');
         document.body.style.overflow = 'hidden';
+        // Prevent body scroll on mobile
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
     }
     
     function closeAwardsPanel() {
+        // Remove open class to trigger closing animation
         awardsBookmark.classList.remove('open');
-        document.body.style.overflow = '';
+        // Wait for animation to complete before resetting body styles
+        setTimeout(function() {
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
+        }, 500);
     }
     
     // Award Lightbox
@@ -1085,6 +1107,96 @@ document.addEventListener('DOMContentLoaded', function() {
     // Prevent panel from closing when clicking inside
     if (awardsPanel) {
         awardsPanel.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+    
+    // ============================================
+    // CERTIFICATES BOOKMARK FUNCTIONALITY
+    // ============================================
+    
+    const certificatesBookmark = document.getElementById('certificatesBookmark');
+    const certificatesTab = document.getElementById('certificatesTab');
+    const certificatesPanel = document.getElementById('certificatesPanel');
+    const certificatesClose = document.getElementById('certificatesClose');
+    
+    if (!certificatesBookmark || !certificatesTab) return;
+    
+    // Toggle panel - Support for both click and touch
+    function handleCertificatesToggle(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (certificatesBookmark.classList.contains('open')) {
+            closeCertificatesPanel();
+        } else {
+            // Close awards panel if open
+            if (awardsBookmark.classList.contains('open')) {
+                closeAwardsPanel();
+            }
+            openCertificatesPanel();
+        }
+    }
+    
+    certificatesTab.addEventListener('click', handleCertificatesToggle);
+    certificatesTab.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        handleCertificatesToggle(e);
+    }, { passive: false });
+    
+    // Close panel - Support for both click and touch
+    if (certificatesClose) {
+        function handleCertificatesClose(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeCertificatesPanel();
+        }
+        certificatesClose.addEventListener('click', handleCertificatesClose);
+        certificatesClose.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            handleCertificatesClose(e);
+        }, { passive: false });
+    }
+    
+    // Close on click outside
+    document.addEventListener('click', function(e) {
+        if (certificatesBookmark.classList.contains('open')) {
+            if (!certificatesBookmark.contains(e.target) && !awardLightbox.contains(e.target)) {
+                closeCertificatesPanel();
+            }
+        }
+    });
+    
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            if (certificatesBookmark.classList.contains('open')) {
+                closeCertificatesPanel();
+            }
+        }
+    });
+    
+    function openCertificatesPanel() {
+        certificatesBookmark.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        // Prevent body scroll on mobile
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+    }
+    
+    function closeCertificatesPanel() {
+        // Remove open class to trigger closing animation
+        certificatesBookmark.classList.remove('open');
+        // Wait for animation to complete before resetting body styles
+        setTimeout(function() {
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
+        }, 500);
+    }
+    
+    // Prevent panel from closing when clicking inside
+    if (certificatesPanel) {
+        certificatesPanel.addEventListener('click', function(e) {
             e.stopPropagation();
         });
     }
