@@ -1781,6 +1781,13 @@ textarea.form-input {
    ============================================ */
 
 /* Tablet - 768px to 1024px */
+/* Hide mobile bookmarks container on desktop */
+@media (min-width: 769px) {
+    .mobile-bookmarks-container {
+        display: none !important;
+    }
+}
+
 @media (min-width: 769px) and (max-width: 1024px) {
     :root {
         --spacing-xl: 5rem;
@@ -1840,6 +1847,81 @@ textarea.form-input {
 
 /* Language Selector Responsive */
 @media (max-width: 768px) {
+    /* Mobile Bookmarks Container - visible only on mobile */
+    .mobile-bookmarks-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-md) var(--spacing-md);
+        background-color: var(--color-white);
+        border-bottom: 1px solid var(--color-gray-light);
+        position: sticky;
+        top: 0;
+        z-index: 997;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .bookmark-tab-mobile {
+        background: var(--color-black);
+        border: none;
+        border-radius: 0;
+        padding: var(--spacing-sm) var(--spacing-md);
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        transition: var(--transition-fast);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 100px;
+        height: 44px;
+        flex: 1;
+        max-width: 120px;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    .bookmark-tab-mobile:hover {
+        background-color: var(--color-black-matte);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+    }
+    
+    .bookmark-tab-mobile:active {
+        transform: scale(0.98);
+        background-color: var(--color-black);
+    }
+    
+    .bookmark-text-mobile {
+        font-family: var(--font-sans);
+        font-size: 0.75rem;
+        font-weight: 400;
+        color: var(--color-white);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        transition: var(--transition-fast);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        line-height: 1.2;
+        text-align: center;
+    }
+    
+    /* Hide desktop bookmarks on mobile */
+    .awards-bookmark,
+    .press-bookmark,
+    .certificates-bookmark {
+        display: none !important;
+    }
+    
     .nav-right {
         gap: var(--spacing-xs);
     }
@@ -1864,6 +1946,154 @@ textarea.form-input {
 
 /* Mobile & Tablet - max 768px */
 @media (max-width: 768px) {
+    /* Mobile Bookmarks Container - visible only on mobile */
+    .mobile-bookmarks-container {
+        display: flex !important;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-sm) var(--spacing-md);
+        background-color: var(--color-white);
+        border-bottom: 1px solid var(--color-gray-light);
+        position: fixed;
+        top: 60px; /* Below navbar */
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 998;
+        box-sizing: border-box;
+    }
+    
+    /* Add padding to hero to account for mobile bookmarks container */
+    .hero {
+        padding-top: calc(var(--spacing-xl) + 120px);
+    }
+    
+    .awards-bookmark-mobile,
+    .press-bookmark-mobile,
+    .certificates-bookmark-mobile {
+        position: relative;
+        flex: 1;
+        max-width: 120px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .bookmark-tab-mobile {
+        background: var(--color-black);
+        border: none;
+        border-radius: 0;
+        padding: var(--spacing-sm) var(--spacing-md);
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        transition: var(--transition-fast);
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 100px;
+        height: 44px;
+        flex: 1;
+        max-width: 120px;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    .bookmark-tab-mobile:hover {
+        background-color: var(--color-black-matte);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+    }
+    
+    .bookmark-tab-mobile:active {
+        transform: scale(0.98);
+        background-color: var(--color-black);
+    }
+    
+    .bookmark-text-mobile {
+        font-family: var(--font-sans);
+        font-size: 0.75rem;
+        font-weight: 400;
+        color: var(--color-white);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        transition: var(--transition-fast);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        line-height: 1.2;
+        text-align: center;
+    }
+    
+    /* Mobile Panels - Dropdown Style, Centered on Screen */
+    .mobile-panel {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90vw;
+        max-width: 600px;
+        max-height: 0;
+        overflow: hidden;
+        background-color: var(--color-white);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        z-index: 999;
+    }
+    
+    .awards-bookmark-mobile.open .mobile-panel,
+    .press-bookmark-mobile.open .mobile-panel,
+    .certificates-bookmark-mobile.open .mobile-panel {
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    
+    .mobile-panel-inner {
+        padding: var(--spacing-md);
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.3s ease 0.15s, transform 0.3s ease 0.15s;
+        min-height: 50px;
+    }
+    
+    .awards-bookmark-mobile.open .mobile-panel-inner,
+    .press-bookmark-mobile.open .mobile-panel-inner,
+    .certificates-bookmark-mobile.open .mobile-panel-inner {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    /* Ensure content is visible in mobile panels */
+    .mobile-panel-inner .certificates-content,
+    .mobile-panel-inner .awards-content,
+    .mobile-panel-inner .press-content {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .mobile-panel-inner .certificate-item,
+    .mobile-panel-inner .award-item,
+    .mobile-panel-inner .press-item {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Hide desktop bookmarks on mobile */
+    .awards-bookmark,
+    .press-bookmark,
+    .certificates-bookmark {
+        display: none !important;
+    }
+    
     :root {
         --spacing-xl: 3rem;
         --spacing-xxl: 4rem;

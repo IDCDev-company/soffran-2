@@ -1173,6 +1173,75 @@ document.addEventListener('DOMContentLoaded', function() {
         handleBookmarkToggle(e);
     }, { passive: false });
     
+    // Mobile bookmark button
+    const bookmarkTabMobile = document.getElementById('bookmarkTabMobile');
+    const mobileAwardsPanel = document.getElementById('mobileAwardsPanel');
+    const mobileAwardsPanelInner = document.getElementById('mobileAwardsPanelInner');
+    const awardsBookmarkMobile = bookmarkTabMobile ? bookmarkTabMobile.closest('.awards-bookmark-mobile') : null;
+    
+    if (bookmarkTabMobile && awardsBookmarkMobile) {
+        // Copy content from desktop panel to mobile panel
+        function copyAwardsContent() {
+            if (awardsPanel && mobileAwardsPanelInner) {
+                const awardsPanelInner = awardsPanel.querySelector('.awards-panel-inner');
+                if (awardsPanelInner) {
+                    mobileAwardsPanelInner.innerHTML = awardsPanelInner.innerHTML;
+                    // Re-apply translations after copying
+                    if (typeof applyTranslations === 'function') {
+                        applyTranslations();
+                    }
+                }
+            }
+        }
+        
+        // Copy content initially
+        copyAwardsContent();
+        
+        function handleMobileAwardsToggle(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const isOpen = awardsBookmarkMobile.classList.contains('open');
+            
+            // Close all mobile panels
+            document.querySelectorAll('.awards-bookmark-mobile, .press-bookmark-mobile, .certificates-bookmark-mobile').forEach(el => {
+                el.classList.remove('open');
+            });
+            
+            if (!isOpen) {
+                // Copy content before opening (in case it changed)
+                copyAwardsContent();
+                awardsBookmarkMobile.classList.add('open');
+            }
+        }
+        
+        bookmarkTabMobile.addEventListener('click', handleMobileAwardsToggle);
+        bookmarkTabMobile.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            handleMobileAwardsToggle(e);
+        }, { passive: false });
+        
+        // Handle close button in mobile panel using event delegation
+        if (mobileAwardsPanel) {
+            mobileAwardsPanel.addEventListener('click', function(e) {
+                e.stopPropagation();
+                // Check if close button was clicked
+                if (e.target.closest('.awards-close')) {
+                    e.preventDefault();
+                    awardsBookmarkMobile.classList.remove('open');
+                }
+            });
+        }
+        
+        // Close on click outside
+        document.addEventListener('click', function(e) {
+            if (awardsBookmarkMobile.classList.contains('open')) {
+                if (!awardsBookmarkMobile.contains(e.target) && !mobileAwardsPanel.contains(e.target)) {
+                    awardsBookmarkMobile.classList.remove('open');
+                }
+            }
+        });
+    }
+    
     // Close panel - Support for both click and touch
     if (awardsClose) {
         function handleClose(e) {
@@ -1304,6 +1373,75 @@ document.addEventListener('DOMContentLoaded', function() {
             handlePressToggle(e);
         }, { passive: false });
         
+        // Mobile press button
+        const pressTabMobile = document.getElementById('pressTabMobile');
+        const mobilePressPanel = document.getElementById('mobilePressPanel');
+        const mobilePressPanelInner = document.getElementById('mobilePressPanelInner');
+        const pressBookmarkMobile = pressTabMobile ? pressTabMobile.closest('.press-bookmark-mobile') : null;
+        
+        if (pressTabMobile && pressBookmarkMobile) {
+            // Copy content from desktop panel to mobile panel
+            function copyPressContent() {
+                if (pressPanel && mobilePressPanelInner) {
+                    const pressPanelInner = pressPanel.querySelector('.press-panel-inner');
+                    if (pressPanelInner) {
+                        mobilePressPanelInner.innerHTML = pressPanelInner.innerHTML;
+                        // Re-apply translations after copying
+                        if (typeof applyTranslations === 'function') {
+                            applyTranslations();
+                        }
+                    }
+                }
+            }
+            
+            // Copy content initially
+            copyPressContent();
+            
+            function handleMobilePressToggle(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const isOpen = pressBookmarkMobile.classList.contains('open');
+                
+                // Close all mobile panels
+                document.querySelectorAll('.awards-bookmark-mobile, .press-bookmark-mobile, .certificates-bookmark-mobile').forEach(el => {
+                    el.classList.remove('open');
+                });
+                
+                if (!isOpen) {
+                    // Copy content before opening (in case it changed)
+                    copyPressContent();
+                    pressBookmarkMobile.classList.add('open');
+                }
+            }
+            
+            pressTabMobile.addEventListener('click', handleMobilePressToggle);
+            pressTabMobile.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                handleMobilePressToggle(e);
+            }, { passive: false });
+            
+            // Handle close button in mobile panel using event delegation
+            if (mobilePressPanel) {
+                mobilePressPanel.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    // Check if close button was clicked
+                    if (e.target.closest('.press-close')) {
+                        e.preventDefault();
+                        pressBookmarkMobile.classList.remove('open');
+                    }
+                });
+            }
+            
+            // Close on click outside
+            document.addEventListener('click', function(e) {
+                if (pressBookmarkMobile.classList.contains('open')) {
+                    if (!pressBookmarkMobile.contains(e.target) && !mobilePressPanel.contains(e.target)) {
+                        pressBookmarkMobile.classList.remove('open');
+                    }
+                }
+            });
+        }
+        
         // Close panel - Support for both click and touch
         if (pressClose) {
             function handlePressClose(e) {
@@ -1389,6 +1527,80 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         handleCertificatesToggle(e);
     }, { passive: false });
+    
+    // Mobile certificates button
+    const certificatesTabMobile = document.getElementById('certificatesTabMobile');
+    const mobileCertificatesPanel = document.getElementById('mobileCertificatesPanel');
+    const mobileCertificatesPanelInner = document.getElementById('mobileCertificatesPanelInner');
+    const certificatesBookmarkMobile = certificatesTabMobile ? certificatesTabMobile.closest('.certificates-bookmark-mobile') : null;
+    
+    if (certificatesTabMobile && certificatesBookmarkMobile) {
+        // Copy content from desktop panel to mobile panel
+        function copyCertificatesContent() {
+            if (certificatesPanel && mobileCertificatesPanelInner) {
+                const certificatesPanelInner = certificatesPanel.querySelector('.certificates-panel-inner');
+                if (certificatesPanelInner && certificatesPanelInner.innerHTML.trim()) {
+                    mobileCertificatesPanelInner.innerHTML = certificatesPanelInner.innerHTML;
+                    // Re-apply translations after copying
+                    if (typeof applyTranslations === 'function') {
+                        setTimeout(function() {
+                            applyTranslations();
+                        }, 10);
+                    }
+                } else {
+                    // Retry if content is not ready yet
+                    setTimeout(copyCertificatesContent, 200);
+                }
+            }
+        }
+        
+        // Copy content initially - with delay to ensure DOM is ready
+        setTimeout(copyCertificatesContent, 100);
+        
+        function handleMobileCertificatesToggle(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const isOpen = certificatesBookmarkMobile.classList.contains('open');
+            
+            // Close all mobile panels
+            document.querySelectorAll('.awards-bookmark-mobile, .press-bookmark-mobile, .certificates-bookmark-mobile').forEach(el => {
+                el.classList.remove('open');
+            });
+            
+            if (!isOpen) {
+                // Copy content before opening (in case it changed)
+                copyCertificatesContent();
+                certificatesBookmarkMobile.classList.add('open');
+            }
+        }
+        
+        certificatesTabMobile.addEventListener('click', handleMobileCertificatesToggle);
+        certificatesTabMobile.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            handleMobileCertificatesToggle(e);
+        }, { passive: false });
+        
+        // Handle close button in mobile panel using event delegation
+        if (mobileCertificatesPanel) {
+            mobileCertificatesPanel.addEventListener('click', function(e) {
+                e.stopPropagation();
+                // Check if close button was clicked
+                if (e.target.closest('.certificates-close')) {
+                    e.preventDefault();
+                    certificatesBookmarkMobile.classList.remove('open');
+                }
+            });
+        }
+        
+        // Close on click outside
+        document.addEventListener('click', function(e) {
+            if (certificatesBookmarkMobile.classList.contains('open')) {
+                if (!certificatesBookmarkMobile.contains(e.target) && !mobileCertificatesPanel.contains(e.target)) {
+                    certificatesBookmarkMobile.classList.remove('open');
+                }
+            }
+        });
+    }
     
     // Close panel - Support for both click and touch
     if (certificatesClose) {
