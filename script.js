@@ -8,6 +8,7 @@
  * - Simulare proces de cumpărare
  * - Validare formulare
  * - Efecte parallax subtile
+ * - Sistem de traduceri multi-limbă
  */
 
 // ============================================
@@ -16,12 +17,123 @@
 
 let selectedWeight = 1; // Default: 1g
 let selectedPrice = 120; // Default: €120
+let currentLanguage = 'ro'; // Default: Romanian
+let translations = {}; // Store translations
 
 // ============================================
 // NAVIGATION & SMOOTH SCROLL
 // ============================================
 
+// ============================================
+// TRANSLATION SYSTEM
+// ============================================
+
+async function loadTranslations(lang) {
+    try {
+        const response = await fetch(`translations/${lang}.json`);
+        if (!response.ok) throw new Error(`Failed to load ${lang}.json`);
+        translations = await response.json();
+        currentLanguage = lang;
+        applyTranslations();
+        updateLanguageSelector();
+        updateMetaTags();
+    } catch (error) {
+        console.error('Error loading translations:', error);
+        if (lang !== 'ro') {
+            loadTranslations('ro');
+        }
+    }
+}
+
+function getNestedValue(obj, path) {
+    return path.split('.').reduce((current, key) => current?.[key], obj);
+}
+
+function applyTranslations() {
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        const translation = getNestedValue(translations, key);
+        if (translation) {
+            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                if (element.hasAttribute('placeholder')) {
+                    element.setAttribute('placeholder', translation);
+                } else {
+                    element.value = translation;
+                }
+            } else if (element.tagName === 'META') {
+                element.setAttribute('content', translation);
+            } else if (element.tagName === 'TITLE') {
+                element.textContent = translation;
+            } else {
+                element.textContent = translation;
+            }
+        }
+    });
+}
+
+function updateLanguageSelector() {
+    const currentLangEl = document.getElementById('currentLanguage');
+    if (currentLangEl) {
+        currentLangEl.textContent = currentLanguage.toUpperCase();
+    }
+    
+    document.querySelectorAll('.language-option').forEach(option => {
+        option.classList.toggle('active', option.getAttribute('data-lang') === currentLanguage);
+    });
+}
+
+function updateMetaTags() {
+    if (translations.meta) {
+        document.querySelector('meta[name="description"]')?.setAttribute('content', translations.meta.description);
+        document.querySelector('meta[name="keywords"]')?.setAttribute('content', translations.meta.keywords);
+        document.querySelector('title').textContent = translations.meta.title;
+    }
+    document.documentElement.setAttribute('lang', currentLanguage);
+}
+
+function changeLanguage(lang) {
+    if (lang === currentLanguage) return;
+    loadTranslations(lang);
+    localStorage.setItem('preferredLanguage', lang);
+}
+
+// ============================================
+// LANGUAGE SELECTOR
+// ============================================
+
+function initLanguageSelector() {
+    const languageBtn = document.getElementById('languageBtn');
+    const languageDropdown = document.getElementById('languageDropdown');
+    const languageOptions = document.querySelectorAll('.language-option');
+    
+    if (!languageBtn || !languageDropdown) return;
+    
+    languageBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        languageDropdown.classList.toggle('active');
+    });
+    
+    languageOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const lang = this.getAttribute('data-lang');
+            changeLanguage(lang);
+            languageDropdown.classList.remove('active');
+        });
+    });
+    
+    document.addEventListener('click', function(e) {
+        if (!languageBtn.contains(e.target) && !languageDropdown.contains(e.target)) {
+            languageDropdown.classList.remove('active');
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    const savedLanguage = localStorage.getItem('preferredLanguage') || 'ro';
+    loadTranslations(savedLanguage);
+    initLanguageSelector();
+    
     // Mobile Navigation Toggle
     const navToggle = document.querySelector('.nav-toggle');
     const navLinks = document.querySelector('.nav-links');
@@ -231,27 +343,27 @@ document.addEventListener('DOMContentLoaded', function() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         
         if (!quantity) {
-            showError('Vă rugăm să selectați o cantitate.');
+            showError(translations.purchase?.errorSelectQuantity || 'Vă rugăm să selectați o cantitate.');
             return false;
         }
         
         if (!name || name.length < 2) {
-            showError('Vă rugăm să introduceți un nume valid.');
+            showError(translations.purchase?.errorValidName || 'Vă rugăm să introduceți un nume valid.');
             return false;
         }
         
         if (!email || !emailRegex.test(email)) {
-            showError('Vă rugăm să introduceți o adresă de email validă.');
+            showError(translations.purchase?.errorValidEmail || 'Vă rugăm să introduceți o adresă de email validă.');
             return false;
         }
         
         if (!phone || phone.length < 10) {
-            showError('Vă rugăm să introduceți un număr de telefon valid.');
+            showError(translations.purchase?.errorValidPhone || 'Vă rugăm să introduceți un număr de telefon valid.');
             return false;
         }
         
         if (!address || address.length < 10) {
-            showError('Vă rugăm să introduceți o adresă completă de livrare.');
+            showError(translations.purchase?.errorValidAddress || 'Vă rugăm să introduceți o adresă completă de livrare.');
             return false;
         }
         
@@ -454,7 +566,6 @@ function selectVariant(weight, price) {
     selectedWeight = weight;
     selectedPrice = price;
     
-    // Actualizează afișarea în secțiunea produs
     const selectedWeightEl = document.getElementById('selectedWeight');
     const selectedPriceEl = document.getElementById('selectedPrice');
     
@@ -464,6 +575,8 @@ function selectVariant(weight, price) {
     if (selectedPriceEl) {
         selectedPriceEl.textContent = '€' + price;
     }
+    
+    applyTranslations();
     
     // Actualizează cardurile variantelor
     const variantCards = document.querySelectorAll('.variant-card');

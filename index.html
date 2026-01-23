@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="VV Gold Saffron Bio - Șofran premium bio certificat. Producător și furnizor de șofran premium, cules manual, cu certificat bio european. Direct de la fermă la consumator.">
-    <meta name="keywords" content="șofran bio, saffron premium, șofran certificat, bio saffron, VV Gold Saffron, certificat bio european">
+    <meta name="description" content="VV Gold Saffron Bio - Șofran premium bio certificat. Producător și furnizor de șofran premium, cules manual, cu certificat bio european. Direct de la fermă la consumator." data-i18n="meta.description">
+    <meta name="keywords" content="șofran bio, saffron premium, șofran certificat, bio saffron, VV Gold Saffron, certificat bio european" data-i18n="meta.keywords">
     <meta name="author" content="VV Gold Saffron Bio">
-    <title>VV Gold Saffron Bio | Șofran Premium Certificat</title>
+    <title data-i18n="meta.title">VV Gold Saffron Bio | Șofran Premium Certificat</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
@@ -29,19 +29,34 @@
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">VV Gold Saffron</div>
-            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-                <span class="nav-toggle-line"></span>
-                <span class="nav-toggle-line"></span>
-                <span class="nav-toggle-line"></span>
-            </button>
+            <div class="nav-right">
+                <div class="language-selector">
+                    <button class="language-btn" id="languageBtn" aria-label="Select language">
+                        <span class="language-current" id="currentLanguage">RO</span>
+                        <svg class="language-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="language-dropdown" id="languageDropdown">
+                        <button class="language-option" data-lang="ro">RO</button>
+                        <button class="language-option" data-lang="en">EN</button>
+                        <button class="language-option" data-lang="ru">RU</button>
+                    </div>
+                </div>
+                <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                    <span class="nav-toggle-line"></span>
+                    <span class="nav-toggle-line"></span>
+                    <span class="nav-toggle-line"></span>
+                </button>
+            </div>
             <div class="nav-links">
-                <a href="#despre" class="nav-link">Despre</a>
-                <a href="#beneficii" class="nav-link">Beneficii</a>
-                <a href="#produs" class="nav-link">Produs</a>
-                <a href="#photo-gallery" class="nav-link">Galerie</a>
-                <a href="#certificate" class="nav-link">Certificări</a>
-                <a href="#achizitie" class="nav-link">Achiziție</a>
-                <a href="#contact" class="nav-link">Contact</a>
+                <a href="#despre" class="nav-link" data-i18n="nav.about">Despre</a>
+                <a href="#beneficii" class="nav-link" data-i18n="nav.benefits">Beneficii</a>
+                <a href="#produs" class="nav-link" data-i18n="nav.product">Produs</a>
+                <a href="#photo-gallery" class="nav-link" data-i18n="nav.gallery">Galerie</a>
+                <a href="#certificate" class="nav-link" data-i18n="nav.certificates">Certificări</a>
+                <a href="#achizitie" class="nav-link" data-i18n="nav.purchase">Achiziție</a>
+                <a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a>
             </div>
         </div>
     </nav>
@@ -49,14 +64,14 @@
     <!-- Awards Bookmark -->
     <div class="awards-bookmark" id="awardsBookmark">
         <button class="bookmark-tab" id="bookmarkTab" aria-label="Deschide trofee">
-            <span class="bookmark-text">Trofee</span>
+            <span class="bookmark-text" data-i18n="awards.bookmarkText">Trofee</span>
             <div class="bookmark-indicator"></div>
         </button>
         
         <div class="awards-panel" id="awardsPanel">
             <div class="awards-panel-inner">
                 <div class="awards-header">
-                    <h2 class="awards-title">Trofee & Certificări</h2>
+                    <h2 class="awards-title" data-i18n="awards.panelTitle">Trofee & Certificări</h2>
                     <button class="awards-close" id="awardsClose" aria-label="Închide">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -171,14 +186,14 @@
     <!-- Certificates Bookmark -->
     <div class="certificates-bookmark" id="certificatesBookmark">
         <button class="bookmark-tab" id="certificatesTab" aria-label="Deschide certificări">
-            <span class="bookmark-text">Certificări</span>
+            <span class="bookmark-text" data-i18n="certificates.bookmarkText">Certificări</span>
             <div class="bookmark-indicator"></div>
         </button>
         
         <div class="certificates-panel" id="certificatesPanel">
             <div class="certificates-panel-inner">
                 <div class="certificates-header">
-                    <h2 class="certificates-title">Certificări & Documente</h2>
+                    <h2 class="certificates-title" data-i18n="certificates.panelTitle">Certificări & Documente</h2>
                     <button class="certificates-close" id="certificatesClose" aria-label="Închide">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -295,8 +310,8 @@
     <!-- Hero Section -->
     <section class="hero" id="hero">
         <div class="hero-content">
-            <h1 class="hero-title fade-in">Welcome to Gold Saffron Bio</h1>
-            <p class="hero-subtitle fade-in-delay">VV Gold Saffron Bio</p>
+            <h1 class="hero-title fade-in" data-i18n="hero.title">Welcome to Gold Saffron Bio</h1>
+            <p class="hero-subtitle fade-in-delay" data-i18n="hero.subtitle">VV Gold Saffron Bio</p>
             <div class="hero-divider fade-in-delay-2"></div>
         </div>
         <div class="hero-scroll-indicator">
@@ -310,19 +325,19 @@
             <div class="stats-grid">
                 <div class="stat-item">
                     <div class="stat-number" data-target="10000">0</div>
-                    <div class="stat-label">Produse Vândute</div>
+                    <div class="stat-label" data-i18n="stats.productsSold">Produse Vândute</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number" data-target="100">0</div>
-                    <div class="stat-label">% Formulă Pură</div>
+                    <div class="stat-label" data-i18n="stats.pureFormula">% Formulă Pură</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number" data-target="5000">0</div>
-                    <div class="stat-label">Clienți Mulțumiți</div>
+                    <div class="stat-label" data-i18n="stats.satisfiedCustomers">Clienți Mulțumiți</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-number" data-target="500">0</div>
-                    <div class="stat-label">+ Produse Corporate</div>
+                    <div class="stat-label" data-i18n="stats.corporateProducts">+ Produse Corporate</div>
                 </div>
             </div>
         </div>
@@ -332,23 +347,23 @@
     <section class="about" id="despre">
         <div class="container">
             <div class="section-header">
-                <span class="section-label">Despre</span>
-                <h2 class="section-title">VV Gold Saffron Bio</h2>
+                <span class="section-label" data-i18n="about.label">Despre</span>
+                <h2 class="section-title" data-i18n="about.title">VV Gold Saffron Bio</h2>
             </div>
             
             <div class="about-content">
                 <div class="about-text">
-                    <p class="lead-text">
+                    <p class="lead-text" data-i18n="about.lead">
                         La VV Gold Saffron Bio, suntem pasionați de tradiție și calitate.
                     </p>
-                    <p class="body-text">
+                    <p class="body-text" data-i18n="about.body1">
                         Ca producător și furnizor de șofran premium bio, suntem dedicați să aducem una dintre cele mai prețuite condimente din lume la masa ta. 
                         Cu experiență extinsă în cultivarea și procesarea șofranului, ne asigurăm că fiecare fir este cules cu grijă și manipulat cu respect 
                         pentru mediu, păstrându-și culoarea vibrantă și aroma bogată. Ne mândrim că oferim produse autentice cultivate în cele mai bune condiții 
                         de sol și climă, și suntem angajați să livrăm șofranul nostru direct de la fermă la consumator, cu certificate bio europene localizate 
                         în Germania (www.kiwa.com), asigurând prospețime și autenticitate de fiecare dată.
                     </p>
-                    <p class="body-text">
+                    <p class="body-text" data-i18n="about.body2">
                         Fie că ești un bucătar profesionist sau un entuziast al gătitului acasă, la VV Gold Saffron Bio suntem aici să îți oferim doar 
                         cele mai fine ingrediente, transformând fiecare fel de mâncare într-o adevărată operă de artă culinară.
                     </p>
@@ -356,22 +371,22 @@
                         <div class="feature-item">
                             <div class="feature-icon">✧</div>
                             <div class="feature-text">
-                                <h3>Cules manual</h3>
-                                <p>Fiecare fir cules cu grijă</p>
+                                <h3 data-i18n="about.feature1Title">Cules manual</h3>
+                                <p data-i18n="about.feature1Desc">Fiecare fir cules cu grijă</p>
                             </div>
                         </div>
                         <div class="feature-item">
                             <div class="feature-icon">✧</div>
                             <div class="feature-text">
-                                <h3>Certificat Bio</h3>
-                                <p>Certificate bio europene</p>
+                                <h3 data-i18n="about.feature2Title">Certificat Bio</h3>
+                                <p data-i18n="about.feature2Desc">Certificate bio europene</p>
                             </div>
                         </div>
                         <div class="feature-item">
                             <div class="feature-icon">✧</div>
                             <div class="feature-text">
-                                <h3>Farm to Consumer</h3>
-                                <p>Direct de la fermă la tine</p>
+                                <h3 data-i18n="about.feature3Title">Farm to Consumer</h3>
+                                <p data-i18n="about.feature3Desc">Direct de la fermă la tine</p>
                             </div>
                         </div>
                     </div>
@@ -384,62 +399,62 @@
     <section class="health-benefits" id="beneficii">
         <div class="container">
             <div class="section-header">
-                <span class="section-label">Beneficii</span>
-                <h2 class="section-title">Beneficii pentru Sănătate</h2>
+                <span class="section-label" data-i18n="benefits.label">Beneficii</span>
+                <h2 class="section-title" data-i18n="benefits.title">Beneficii pentru Sănătate</h2>
             </div>
             
             <div class="benefits-grid">
                 <div class="benefit-item">
                     <div class="benefit-icon">✧</div>
                     <div class="benefit-content">
-                        <h3 class="benefit-title">Antioxidanți Puternici</h3>
-                        <p class="benefit-description">Crocina și crocetina protejează celulele împotriva stresului oxidativ</p>
+                        <h3 class="benefit-title" data-i18n="benefits.benefit1Title">Antioxidanți Puternici</h3>
+                        <p class="benefit-description" data-i18n="benefits.benefit1Desc">Crocina și crocetina protejează celulele împotriva stresului oxidativ</p>
                     </div>
                 </div>
                 
                 <div class="benefit-item">
                     <div class="benefit-icon">✧</div>
                     <div class="benefit-content">
-                        <h3 class="benefit-title">Proprietăți Anti-inflamatorii</h3>
-                        <p class="benefit-description">Reduc inflamația și suportă sănătatea cardiovasculară</p>
+                        <h3 class="benefit-title" data-i18n="benefits.benefit2Title">Proprietăți Anti-inflamatorii</h3>
+                        <p class="benefit-description" data-i18n="benefits.benefit2Desc">Reduc inflamația și suportă sănătatea cardiovasculară</p>
                     </div>
                 </div>
                 
                 <div class="benefit-item">
                     <div class="benefit-icon">✧</div>
                     <div class="benefit-content">
-                        <h3 class="benefit-title">Îmbunătățește Starea de Spirit</h3>
-                        <p class="benefit-description">Poate ajuta la reducerea anxietății și depresiei ușoare</p>
+                        <h3 class="benefit-title" data-i18n="benefits.benefit3Title">Îmbunătățește Starea de Spirit</h3>
+                        <p class="benefit-description" data-i18n="benefits.benefit3Desc">Poate ajuta la reducerea anxietății și depresiei ușoare</p>
                     </div>
                 </div>
                 
                 <div class="benefit-item">
                     <div class="benefit-icon">✧</div>
                     <div class="benefit-content">
-                        <h3 class="benefit-title">Suport Digestiv</h3>
-                        <p class="benefit-description">Îmbunătățește digestia și reduce problemele digestive</p>
+                        <h3 class="benefit-title" data-i18n="benefits.benefit4Title">Suport Digestiv</h3>
+                        <p class="benefit-description" data-i18n="benefits.benefit4Desc">Îmbunătățește digestia și reduce problemele digestive</p>
                     </div>
                 </div>
                 
                 <div class="benefit-item">
                     <div class="benefit-icon">✧</div>
                     <div class="benefit-content">
-                        <h3 class="benefit-title">Sănătate Oculară</h3>
-                        <p class="benefit-description">Protejează retina și menține sănătatea ochilor</p>
+                        <h3 class="benefit-title" data-i18n="benefits.benefit5Title">Sănătate Oculară</h3>
+                        <p class="benefit-description" data-i18n="benefits.benefit5Desc">Protejează retina și menține sănătatea ochilor</p>
                     </div>
                 </div>
                 
                 <div class="benefit-item">
                     <div class="benefit-icon">✧</div>
                     <div class="benefit-content">
-                        <h3 class="benefit-title">Vitamine și Minerale</h3>
-                        <p class="benefit-description">Sursă de vitamina A, C, mangan și minerale esențiale</p>
+                        <h3 class="benefit-title" data-i18n="benefits.benefit6Title">Vitamine și Minerale</h3>
+                        <p class="benefit-description" data-i18n="benefits.benefit6Desc">Sursă de vitamina A, C, mangan și minerale esențiale</p>
                     </div>
                 </div>
             </div>
             
             <div class="benefits-note">
-                <p class="note-text">
+                <p class="note-text" data-i18n="benefits.note">
                     <strong>Notă:</strong> Beneficiile se referă la utilizarea șofranului ca parte a unei diete echilibrate. Consultă un medic pentru probleme specifice.
                 </p>
             </div>
@@ -450,8 +465,8 @@
     <section class="product" id="produs">
         <div class="container">
             <div class="section-header">
-                <span class="section-label">Produs</span>
-                <h2 class="section-title">Șofran Premium</h2>
+                <span class="section-label" data-i18n="product.label">Produs</span>
+                <h2 class="section-title" data-i18n="product.title">Șofran Premium</h2>
             </div>
             
             <div class="product-showcase">
@@ -463,60 +478,60 @@
                 
                 <div class="product-details">
                     <div class="product-info">
-                        <h3 class="product-name">Șofran Premium Bio</h3>
-                        <p class="product-description">
+                        <h3 class="product-name" data-i18n="product.name">Șofran Premium Bio</h3>
+                        <p class="product-description" data-i18n="product.description">
                             Șofran premium, cules manual, cu certificat bio european. Condimentul de aur care transformă fiecare fel de mâncare într-o experiență culinară extraordinară.
                         </p>
                         
                         <div class="product-specs">
                             <div class="spec-item">
-                                <span class="spec-label">Certificare</span>
-                                <span class="spec-value">Bio European (Kiwa)</span>
+                                <span class="spec-label" data-i18n="product.specCertification">Certificare</span>
+                                <span class="spec-value" data-i18n="product.specCertificationValue">Bio European (Kiwa)</span>
                             </div>
                             <div class="spec-item">
-                                <span class="spec-label">Procesare</span>
-                                <span class="spec-value">Cules manual, uscat natural</span>
+                                <span class="spec-label" data-i18n="product.specProcessing">Procesare</span>
+                                <span class="spec-value" data-i18n="product.specProcessingValue">Cules manual, uscat natural</span>
                             </div>
                             <div class="spec-item">
-                                <span class="spec-label">Beneficii</span>
-                                <span class="spec-value">Bogat în antioxidanți</span>
+                                <span class="spec-label" data-i18n="product.specBenefits">Beneficii</span>
+                                <span class="spec-value" data-i18n="product.specBenefitsValue">Bogat în antioxidanți</span>
                             </div>
                         </div>
                         
                         <!-- Product Variants & Pricing -->
                         <div class="product-pricing">
-                            <h4 class="pricing-title">Selectează cantitatea</h4>
+                            <h4 class="pricing-title" data-i18n="product.pricingTitle">Selectează cantitatea</h4>
                             <div class="product-variants">
                                 <div class="variant-card" data-weight="0.1" data-price="15">
                                     <div class="variant-weight">0.1g</div>
                                     <div class="variant-price">€15</div>
-                                    <button class="btn-variant" onclick="selectVariant(0.1, 15)">Selectează</button>
+                                    <button class="btn-variant" onclick="selectVariant(0.1, 15)" data-i18n="product.selectVariant">Selectează</button>
                                 </div>
                                 <div class="variant-card" data-weight="0.5" data-price="65">
                                     <div class="variant-weight">0.5g</div>
                                     <div class="variant-price">€65</div>
-                                    <button class="btn-variant" onclick="selectVariant(0.5, 65)">Selectează</button>
+                                    <button class="btn-variant" onclick="selectVariant(0.5, 65)" data-i18n="product.selectVariant">Selectează</button>
                                 </div>
                                 <div class="variant-card variant-selected" data-weight="1" data-price="120">
                                     <div class="variant-weight">1g</div>
                                     <div class="variant-price">€120</div>
-                                    <button class="btn-variant" onclick="selectVariant(1, 120)">Selectează</button>
+                                    <button class="btn-variant" onclick="selectVariant(1, 120)" data-i18n="product.selectVariant">Selectează</button>
                                 </div>
                             </div>
                             
                             <div class="selected-variant-info">
                                 <div class="selected-info">
-                                    <span class="selected-label">Cantitate selectată:</span>
+                                    <span class="selected-label" data-i18n="product.selectedQuantity">Cantitate selectată:</span>
                                     <span class="selected-value" id="selectedWeight">1g</span>
                                 </div>
                                 <div class="selected-price">
-                                    <span class="price-label">Preț:</span>
+                                    <span class="price-label" data-i18n="product.price">Preț:</span>
                                     <span class="price-value" id="selectedPrice">€120</span>
                                 </div>
                             </div>
                             
                             <button class="btn-buy-now" onclick="scrollToPurchase()">
-                                <span>Cumpără acum</span>
+                                <span data-i18n="product.buyNow">Cumpără acum</span>
                                 <span class="btn-arrow">→</span>
                             </button>
                         </div>
@@ -530,8 +545,8 @@
     <section class="photo-gallery" id="photo-gallery">
         <div class="container">
             <div class="section-header">
-                <span class="section-label">Galerie</span>
-                <h2 class="section-title">Galerie Foto</h2>
+                <span class="section-label" data-i18n="gallery.label">Galerie</span>
+                <h2 class="section-title" data-i18n="gallery.title">Galerie Foto</h2>
             </div>
             
             <div class="photo-gallery-wrapper">
@@ -627,7 +642,7 @@
 
     <!-- Gallery Section -->
     <section class="gallery-section" id="gallery">
-        <h2 class="gallery-title">Galerie Video</h2>
+        <h2 class="gallery-title" data-i18n="gallery.videoTitle">Galerie Video</h2>
         <div class="gallery">
             <ul class="cards">
                 <li>
@@ -860,8 +875,8 @@
                 </li>
             </ul>
             <div class="actions">
-                <button class="prev">Prev</button>
-                <button class="next">Next</button>
+                <button class="prev" data-i18n="gallery.prev">Prev</button>
+                <button class="next" data-i18n="gallery.next">Next</button>
             </div>
         </div>
     </section>
@@ -870,16 +885,16 @@
     <section class="certificates" id="certificate">
         <div class="container">
             <div class="section-header">
-                <span class="section-label">Certificări</span>
-                <h2 class="section-title">Calitate Certificată</h2>
+                <span class="section-label" data-i18n="certificates.label">Certificări</span>
+                <h2 class="section-title" data-i18n="certificates.title">Calitate Certificată</h2>
             </div>
             
             <div class="certificates-content">
                 <div class="certificate-info">
-                    <p class="lead-text">
+                    <p class="lead-text" data-i18n="certificates.lead">
                         Produsele noastre sunt certificate cu certificate bio europene, localizate în Germania.
                     </p>
-                    <p class="body-text">
+                    <p class="body-text" data-i18n="certificates.body">
                         Ne mândrim cu certificarea noastră bio europeană, care garantează că șofranul nostru este cultivat și procesat conform celor mai 
                         stricte standarde de calitate și sustenabilitate. Certificatele noastre sunt emise de Kiwa (www.kiwa.com), una dintre cele mai 
                         respectate autorități de certificare din Europa.
@@ -887,8 +902,8 @@
                     <div class="certificate-badge">
                         <div class="badge-icon">✓</div>
                         <div class="badge-text">
-                            <h3>Certificat Bio European</h3>
-                            <p>Kiwa Certification - Germania</p>
+                            <h3 data-i18n="certificates.badgeTitle">Certificat Bio European</h3>
+                            <p data-i18n="certificates.badgeSubtitle">Kiwa Certification - Germania</p>
                         </div>
                     </div>
                 </div>
@@ -900,16 +915,16 @@
     <section class="purchase" id="achizitie">
         <div class="container">
             <div class="section-header">
-                <span class="section-label">Achiziție</span>
-                <h2 class="section-title">Comandă acum</h2>
+                <span class="section-label" data-i18n="purchase.label">Achiziție</span>
+                <h2 class="section-title" data-i18n="purchase.title">Comandă acum</h2>
             </div>
             
             <div class="purchase-form-container">
                 <form class="purchase-form" id="purchaseForm">
                     <div class="form-group">
-                        <label for="quantity">Cantitate</label>
+                        <label for="quantity" data-i18n="purchase.quantity">Cantitate</label>
                         <select id="quantity" name="quantity" class="form-input" required>
-                            <option value="">Selectează cantitatea</option>
+                            <option value="" data-i18n="purchase.selectQuantity">Selectează cantitatea</option>
                             <option value="0.1g" data-price="15">0.1g - €15</option>
                             <option value="0.5g" data-price="65">0.5g - €65</option>
                             <option value="1g" data-price="120" selected>1g - €120</option>
@@ -917,32 +932,32 @@
                     </div>
                     
                     <div class="form-group">
-                        <label>Preț total</label>
+                        <label data-i18n="purchase.totalPrice">Preț total</label>
                         <div class="price-display" id="formPriceDisplay">€120</div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="name">Nume complet</label>
-                        <input type="text" id="name" name="name" class="form-input" placeholder="Numele tău" required>
+                        <label for="name" data-i18n="purchase.fullName">Nume complet</label>
+                        <input type="text" id="name" name="name" class="form-input" data-i18n="purchase.namePlaceholder" placeholder="Numele tău" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-input" placeholder="email@exemplu.com" required>
+                        <label for="email" data-i18n="purchase.email">Email</label>
+                        <input type="email" id="email" name="email" class="form-input" data-i18n="purchase.emailPlaceholder" placeholder="email@exemplu.com" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="phone">Telefon</label>
-                        <input type="tel" id="phone" name="phone" class="form-input" placeholder="+373 79 994 997" required>
+                        <label for="phone" data-i18n="purchase.phone">Telefon</label>
+                        <input type="tel" id="phone" name="phone" class="form-input" data-i18n="purchase.phonePlaceholder" placeholder="+373 79 994 997" required>
                     </div>
                     
                     <div class="form-group">
-                        <label for="address">Adresă de livrare</label>
-                        <textarea id="address" name="address" class="form-input" rows="3" placeholder="Adresa completă" required></textarea>
+                        <label for="address" data-i18n="purchase.address">Adresă de livrare</label>
+                        <textarea id="address" name="address" class="form-input" rows="3" data-i18n="purchase.addressPlaceholder" placeholder="Adresa completă" required></textarea>
                     </div>
                     
                     <button type="submit" class="btn-purchase">
-                        <span>Finalizează comanda</span>
+                        <span data-i18n="purchase.submit">Finalizează comanda</span>
                         <span class="btn-arrow">→</span>
                     </button>
                 </form>
@@ -950,9 +965,9 @@
                 <!-- Success Message -->
                 <div class="success-message" id="successMessage">
                     <div class="success-icon">✓</div>
-                    <h3>Comandă confirmată</h3>
-                    <p>Mulțumim pentru comanda ta. Te vom contacta în curând pentru confirmarea finală.</p>
-                    <button class="btn-reset" onclick="resetForm()">Plasează altă comandă</button>
+                    <h3 data-i18n="purchase.successTitle">Comandă confirmată</h3>
+                    <p data-i18n="purchase.successMessage">Mulțumim pentru comanda ta. Te vom contacta în curând pentru confirmarea finală.</p>
+                    <button class="btn-reset" onclick="resetForm()" data-i18n="purchase.placeAnotherOrder">Plasează altă comandă</button>
                 </div>
             </div>
         </div>
@@ -962,8 +977,8 @@
     <section class="contact" id="contact">
         <div class="container">
             <div class="section-header">
-                <span class="section-label">Contact</span>
-                <h2 class="section-title">Reach Out to Us</h2>
+                <span class="section-label" data-i18n="contact.label">Contact</span>
+                <h2 class="section-title" data-i18n="contact.title">Reach Out to Us</h2>
             </div>
             
             <div class="contact-content">
@@ -971,14 +986,14 @@
                     <div class="contact-item">
                         <div class="contact-icon">📞</div>
                         <div class="contact-details">
-                            <h3>Telefon</h3>
+                            <h3 data-i18n="contact.phone">Telefon</h3>
                             <a href="tel:+37379994997">+373 79 994 997</a>
                         </div>
                     </div>
                     <div class="contact-item">
                         <div class="contact-icon">✉️</div>
                         <div class="contact-details">
-                            <h3>Email</h3>
+                            <h3 data-i18n="contact.email">Email</h3>
                             <a href="mailto:info@vvgoldsaffron.com">info@vvgoldsaffron.com</a>
                         </div>
                     </div>
@@ -993,12 +1008,12 @@
             <div class="footer-content">
                 <div class="footer-brand">VV Gold Saffron</div>
                 <div class="footer-text">
-                    <p>Producător și furnizor de șofran premium bio certificat.</p>
+                    <p data-i18n="footer.description">Producător și furnizor de șofran premium bio certificat.</p>
                     <div class="footer-contact">
                         <p><a href="tel:+37379994997">+373 79 994 997</a></p>
                         <p><a href="mailto:info@vvgoldsaffron.com">info@vvgoldsaffron.com</a></p>
                     </div>
-                    <p class="footer-copyright">&copy; 2025 VV Gold Saffron. Toate drepturile rezervate.</p>
+                    <p class="footer-copyright" data-i18n="footer.copyright">&copy; 2025 VV Gold Saffron. Toate drepturile rezervate.</p>
                 </div>
             </div>
         </div>
