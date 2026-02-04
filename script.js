@@ -16,7 +16,7 @@
 // ============================================
 
 let selectedWeight = 1; // Default: 1g
-let selectedPrice = 120; // Default: €120
+let selectedPrice = 50;
 let currentLanguage = 'ro'; // Default: Romanian
 let translations = {}; // Store translations
 
