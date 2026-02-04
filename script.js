@@ -176,8 +176,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetSection = document.querySelector(targetId);
             
             if (targetSection) {
-                const navHeight = document.querySelector('.navbar').offsetHeight;
-                const targetPosition = targetSection.offsetTop - navHeight;
+                const announcement = document.querySelector('.announcement-bar');
+                const navbar = document.querySelector('.navbar');
+                const headerHeight = (announcement ? announcement.offsetHeight : 0) + (navbar ? navbar.offsetHeight : 0);
+                const targetPosition = targetSection.offsetTop - headerHeight;
                 
                 window.scrollTo({
                     top: targetPosition,
@@ -197,8 +199,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const targetSection = document.querySelector(targetId);
                 
                 if (targetSection) {
-                    const navHeight = document.querySelector('.navbar').offsetHeight;
-                    const targetPosition = targetSection.offsetTop - navHeight;
+                    const announcement = document.querySelector('.announcement-bar');
+                    const navbar = document.querySelector('.navbar');
+                    const headerHeight = (announcement ? announcement.offsetHeight : 0) + (navbar ? navbar.offsetHeight : 0);
+                    const targetPosition = targetSection.offsetTop - headerHeight;
                     
                     window.scrollTo({
                         top: targetPosition,
@@ -609,8 +613,10 @@ function selectVariant(weight, price) {
 function scrollToPurchase() {
     const purchaseSection = document.querySelector('#achizitie');
     if (purchaseSection) {
-        const navHeight = document.querySelector('.navbar').offsetHeight;
-        const targetPosition = purchaseSection.offsetTop - navHeight;
+        const announcement = document.querySelector('.announcement-bar');
+        const navbar = document.querySelector('.navbar');
+        const headerHeight = (announcement ? announcement.offsetHeight : 0) + (navbar ? navbar.offsetHeight : 0);
+        const targetPosition = purchaseSection.offsetTop - headerHeight;
         
         window.scrollTo({
             top: targetPosition,
