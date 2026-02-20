@@ -150,7 +150,9 @@
     "errorValidName": "Vă rugăm să introduceți un nume valid.",
     "errorValidEmail": "Vă rugăm să introduceți o adresă de email validă.",
     "errorValidPhone": "Vă rugăm să introduceți un număr de telefon valid.",
-    "errorValidAddress": "Vă rugăm să introduceți o adresă completă de livrare."
+    "errorValidAddress": "Vă rugăm să introduceți o adresă completă de livrare.",
+    "sending": "Se trimite...",
+    "errorSend": "Comanda nu a putut fi trimisă. Încercați din nou sau contactați-ne la info@vvgoldsaffron.com."
   },
   "contact": {
     "label": "Contact",

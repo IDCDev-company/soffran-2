@@ -150,7 +150,9 @@
     "errorValidName": "Please enter a valid name.",
     "errorValidEmail": "Please enter a valid email address.",
     "errorValidPhone": "Please enter a valid phone number.",
-    "errorValidAddress": "Please enter a complete delivery address."
+    "errorValidAddress": "Please enter a complete delivery address.",
+    "sending": "Sending...",
+    "errorSend": "Order could not be sent. Please try again or contact us at info@vvgoldsaffron.com."
   },
   "contact": {
     "label": "Contact",

@@ -15,10 +15,12 @@
 // GLOBAL VARIABLES
 // ============================================
 
-let selectedWeight = 1; // Default: 1g
+let selectedWeight = 1;
 let selectedPrice = 50;
-let currentLanguage = 'ro'; // Default: Romanian
-let translations = {}; // Store translations
+let currentLanguage = 'ro';
+let translations = {};
+
+const ORDER_EMAIL_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
 
 // ============================================
 // NAVIGATION & SMOOTH SCROLL
@@ -406,39 +408,55 @@ document.addEventListener('DOMContentLoaded', function() {
         errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
     
-    // Procesare comandă (simulare)
     function processPurchase() {
-        // Ascunde formularul
-        purchaseForm.style.display = 'none';
-        
-        // Afișează mesajul de succes cu animație
-        setTimeout(() => {
-            successMessage.classList.add('show');
-            
-            // Scroll la mesajul de succes
-            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            // Salvează datele comenzii în localStorage (simulare)
-            const orderData = {
-                quantity: document.getElementById('quantity').value,
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                address: document.getElementById('address').value,
-                timestamp: new Date().toISOString()
-            };
-            
-            // Simulare salvare comandă
-            console.log('Comandă procesată:', orderData);
-            
-            // În producție, aici s-ar face un request către server
-            // fetch('/api/orders', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(orderData)
-            // });
-            
-        }, 300);
+        const quantitySelect = document.getElementById('quantity');
+        const selectedOption = quantitySelect.options[quantitySelect.selectedIndex];
+        const price = selectedOption ? selectedOption.getAttribute('data-price') : '';
+        const quantity = document.getElementById('quantity').value;
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const address = document.getElementById('address').value;
+
+        const payload = {
+            _subject: `Comandă nouă VV Gold Saffron - ${name}`,
+            _replyto: email,
+            quantity,
+            price: price ? `€${price}` : '',
+            name,
+            email,
+            phone,
+            address,
+            _timestamp: new Date().toISOString()
+        };
+
+        const submitBtn = purchaseForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn ? submitBtn.querySelector('span')?.textContent : '';
+        if (submitBtn) {
+            const span = submitBtn.querySelector('span');
+            if (span) span.textContent = translations.purchase?.sending || 'Se trimite...';
+            submitBtn.disabled = true;
+        }
+
+        fetch(ORDER_EMAIL_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+            .then(response => {
+                if (!response.ok) throw new Error('Trimitere eșuată');
+                purchaseForm.style.display = 'none';
+                successMessage.classList.add('show');
+                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            })
+            .catch(() => {
+                showError(translations.purchase?.errorSend || 'Comanda nu a putut fi trimisă. Încercați din nou sau contactați-ne la info@vvgoldsaffron.com.');
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    const span = submitBtn.querySelector('span');
+                    if (span) span.textContent = originalBtnText;
+                }
+            });
     }
     
     // Reset formular (pentru butonul din mesajul de succes)
