@@ -16,11 +16,38 @@
 // ============================================
 
 let selectedWeight = 1;
-let selectedPrice = 50;
+let selectedPrice = 90;
 let currentLanguage = 'ro';
 let translations = {};
+const LOADER_MIN_TIME = 900;
 
 const ORDER_EMAIL_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+
+if (document.body) {
+    document.body.classList.add('loader-active');
+}
+
+function initPremiumLoader() {
+    const loader = document.getElementById('premiumLoader');
+    if (!loader) return;
+
+    const start = Date.now();
+    const hideLoader = () => {
+        const elapsed = Date.now() - start;
+        const wait = Math.max(0, LOADER_MIN_TIME - elapsed);
+
+        setTimeout(() => {
+            loader.classList.add('is-hidden');
+            document.body.classList.remove('loader-active');
+        }, wait);
+    };
+
+    if (document.readyState === 'complete') {
+        hideLoader();
+    } else {
+        window.addEventListener('load', hideLoader, { once: true });
+    }
+}
 
 // ============================================
 // NAVIGATION & SMOOTH SCROLL
@@ -54,7 +81,10 @@ function getNestedValue(obj, path) {
 function applyTranslations() {
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
-        const translation = getNestedValue(translations, key);
+        let translation = getNestedValue(translations, key);
+        if (key === 'announcement.text' && typeof translation === 'string') {
+            translation = translation.replace(/\s*•\s*/g, '  •  ');
+        }
         if (translation) {
             if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                 if (element.hasAttribute('placeholder')) {
@@ -71,6 +101,58 @@ function applyTranslations() {
             }
         }
     });
+
+    refreshPremiumGalleryAria();
+}
+
+/** Etichete aria pentru galeria foto premium (miniaturi, hero, săgeți) */
+function refreshPremiumGalleryAria() {
+    const galleryRoot = document.getElementById('premiumPhotoGallery');
+    if (!galleryRoot) return;
+
+    const thumbs = galleryRoot.querySelectorAll('.premium-gallery-showcase__thumb[data-photo-index]');
+    const total = thumbs.length;
+    const thumbTmpl =
+        translations.gallery?.selectThumbAria ||
+        translations.gallery?.openPhotoAria ||
+        'Select photo {n} of {total}';
+    thumbs.forEach((btn) => {
+        const idx = parseInt(btn.getAttribute('data-photo-index'), 10);
+        if (Number.isFinite(idx)) {
+            btn.setAttribute(
+                'aria-label',
+                thumbTmpl.replace('{n}', String(idx + 1)).replace('{total}', String(total)),
+            );
+        }
+    });
+
+    const vp = document.getElementById('premiumGalleryThumbsViewport');
+    if (vp && translations.gallery?.thumbnailStripLabel) {
+        vp.setAttribute('aria-label', translations.gallery.thumbnailStripLabel);
+    }
+
+    const expandBtn = document.getElementById('premiumGalleryExpand');
+    if (expandBtn && translations.gallery?.expandPhoto) {
+        expandBtn.setAttribute('aria-label', translations.gallery.expandPhoto);
+    }
+
+    const stripPrev = document.getElementById('premiumGalleryStripPrev');
+    const stripNext = document.getElementById('premiumGalleryStripNext');
+    if (stripPrev && translations.gallery?.thumbStripPrev) {
+        stripPrev.setAttribute('aria-label', translations.gallery.thumbStripPrev);
+    }
+    if (stripNext && translations.gallery?.thumbStripNext) {
+        stripNext.setAttribute('aria-label', translations.gallery.thumbStripNext);
+    }
+
+    const hc = galleryRoot.querySelector('.premium-gallery-showcase__hero-card');
+    if (hc) {
+        hc.setAttribute('tabindex', '0');
+        const heroLab =
+            translations.gallery?.heroFocusLabel ||
+            'Main gallery photo. Use arrow keys to change.';
+        hc.setAttribute('aria-label', heroLab);
+    }
 }
 
 function updateLanguageSelector() {
@@ -132,6 +214,8 @@ function initLanguageSelector() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    initPremiumLoader();
+
     const savedLanguage = localStorage.getItem('preferredLanguage') || 'ro';
     loadTranslations(savedLanguage);
     initLanguageSelector();
@@ -147,9 +231,11 @@ document.addEventListener('DOMContentLoaded', function() {
             navToggle.setAttribute('aria-expanded', navLinks.classList.contains('active'));
         });
         
-        // Close menu when clicking on a link
-        const navLinkItems = navLinks.querySelectorAll('.nav-link');
-        navLinkItems.forEach(link => {
+        // Close menu when clicking on a link or quick-panel button
+        const navDismissTargets = navLinks.querySelectorAll(
+            '.nav-link, button.nav-quick[data-mobile-bookmark]',
+        );
+        navDismissTargets.forEach((link) => {
             link.addEventListener('click', function() {
                 navToggle.classList.remove('active');
                 navLinks.classList.remove('active');
@@ -167,14 +253,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Smooth scroll pentru link-urile de navigare
-    const allNavLinks = document.querySelectorAll('.nav-link');
-    
-    allNavLinks.forEach(link => {
+    // Smooth scroll pentru ancorele din meniu (doar link-uri <a>)
+    const allNavLinks = document.querySelectorAll('.nav-links a.nav-link');
+
+    allNavLinks.forEach((link) => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
-            
-            const targetId = this.getAttribute('href');
+
+            const href = this.getAttribute('href');
+            if (!href || !href.startsWith('#')) return;
+
+            const targetId = href;
             const targetSection = document.querySelector(targetId);
             
             if (targetSection) {
@@ -553,6 +642,194 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
+// MOBILE BOOKMARK HANDLER — bară sticky sus + sheet în jos
+// ============================================
+document.addEventListener('DOMContentLoaded', function() {
+    const mqMobile = window.matchMedia('(max-width: 768px)');
+
+    const setup = [
+        {
+            buttonId: 'bookmarkTabMobile',
+            panelId: 'mobileAwardsPanel',
+            wrapperSelector: '.awards-bookmark-mobile',
+            sourceInnerSelector: '#awardsPanel .awards-panel-inner',
+            targetInnerId: 'mobileAwardsPanelInner'
+        },
+        {
+            buttonId: 'pressTabMobile',
+            panelId: 'mobilePressPanel',
+            wrapperSelector: '.press-bookmark-mobile',
+            sourceInnerSelector: '#pressPanel .press-panel-inner',
+            targetInnerId: 'mobilePressPanelInner'
+        },
+        {
+            buttonId: 'certificatesTabMobile',
+            panelId: 'mobileCertificatesPanel',
+            wrapperSelector: '.certificates-bookmark-mobile',
+            sourceInnerSelector: '#certificatesPanel .certificates-panel-inner',
+            targetInnerId: 'mobileCertificatesPanelInner'
+        },
+    ];
+
+    const keyToSetup = {
+        awards: setup[0],
+        press: setup[1],
+        certificates: setup[2],
+    };
+
+    const allPanels = setup
+        .map(item => document.getElementById(item.panelId))
+        .filter(Boolean);
+    const allWrappers = setup
+        .map(item => document.querySelector(item.wrapperSelector))
+        .filter(Boolean);
+    const mobileBookmarksContainer = document.getElementById('mobileBookmarksContainer');
+    const rootStyle = document.documentElement.style;
+
+    function syncMobileOverlayOffsets() {
+        if (!mqMobile.matches) return;
+        const announcement = document.querySelector('.announcement-bar');
+        const navbar = document.querySelector('.navbar');
+
+        const announcementHeight = announcement ? announcement.offsetHeight : 0;
+        const navbarHeight = navbar ? navbar.offsetHeight : 0;
+        const headerOffset = announcementHeight + navbarHeight;
+        const bookmarksHeight = mobileBookmarksContainer ? mobileBookmarksContainer.offsetHeight : 0;
+        let overlayTop = headerOffset + bookmarksHeight;
+
+        if (mobileBookmarksContainer) {
+            const rect = mobileBookmarksContainer.getBoundingClientRect();
+            if (Number.isFinite(rect.bottom) && rect.bottom > 0) {
+                overlayTop = Math.max(headerOffset, Math.round(rect.bottom));
+            }
+        }
+
+        rootStyle.setProperty('--header-offset', `${headerOffset}px`);
+        if (bookmarksHeight > 0) {
+            rootStyle.setProperty('--mobile-bookmarks-bar-total', `${bookmarksHeight}px`);
+        }
+        rootStyle.setProperty('--mobile-overlay-top', `${overlayTop}px`);
+    }
+
+    function closeAllMobilePanels() {
+        allPanels.forEach(panel => panel.classList.remove('open'));
+        allWrappers.forEach(wrapper => wrapper.classList.remove('open'));
+        document.body.classList.remove('mobile-popup-open');
+    }
+
+    function syncPanelContent(item) {
+        const sourceInner = document.querySelector(item.sourceInnerSelector);
+        const targetInner = document.getElementById(item.targetInnerId);
+        if (!sourceInner || !targetInner) return;
+
+        targetInner.innerHTML = '';
+        Array.from(sourceInner.children).forEach(child => {
+            targetInner.appendChild(child.cloneNode(true));
+        });
+        if (typeof applyTranslations === 'function') {
+            applyTranslations();
+        }
+    }
+
+    function openPanel(item) {
+        if (!mqMobile.matches) return;
+        syncMobileOverlayOffsets();
+        const panel = document.getElementById(item.panelId);
+        const wrapper = document.querySelector(item.wrapperSelector);
+        if (!panel || !wrapper) return;
+
+        closeAllMobilePanels();
+        syncPanelContent(item);
+        panel.classList.add('open');
+        wrapper.classList.add('open');
+        document.body.classList.add('mobile-popup-open');
+    }
+
+    setup.forEach((item) => syncPanelContent(item));
+    syncMobileOverlayOffsets();
+    window.addEventListener('resize', debounce(syncMobileOverlayOffsets, 80));
+    window.addEventListener('load', () => {
+        syncMobileOverlayOffsets();
+    });
+
+    setup.forEach((item) => {
+        const button = document.getElementById(item.buttonId);
+        const panel = document.getElementById(item.panelId);
+        const wrapper = document.querySelector(item.wrapperSelector);
+        if (!button || !panel || !wrapper) return;
+
+        const handleOpen = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const shouldOpen = !panel.classList.contains('open');
+            if (shouldOpen) {
+                openPanel(item);
+            } else {
+                closeAllMobilePanels();
+            }
+        };
+
+        button.addEventListener('click', handleOpen);
+
+        panel.addEventListener('click', function(e) {
+            if (e.target.closest('.awards-close, .press-close, .certificates-close')) {
+                e.preventDefault();
+                closeAllMobilePanels();
+                return;
+            }
+
+            if (e.target === panel) {
+                closeAllMobilePanels();
+            }
+        });
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!mqMobile.matches) return;
+        if (e.target.closest('[data-mobile-bookmark], .mobile-bookmarks-container')) return;
+        const clickedInsideControls = setup.some((item) => {
+            const wrapper = document.querySelector(item.wrapperSelector);
+            const panel = document.getElementById(item.panelId);
+            return (wrapper && wrapper.contains(e.target)) || (panel && panel.contains(e.target));
+        });
+        if (!clickedInsideControls) {
+            closeAllMobilePanels();
+        }
+    });
+
+    window.__mobileBookmarkPanels = {
+        openByKey(key) {
+            const item = keyToSetup[key];
+            if (item) openPanel(item);
+        },
+        closeAll: closeAllMobilePanels,
+    };
+
+    document.addEventListener('click', function(e) {
+        const trigger = e.target.closest('[data-mobile-bookmark]');
+        if (!trigger || !mqMobile.matches) return;
+
+        const key = trigger.getAttribute('data-mobile-bookmark');
+        const item = keyToSetup[key];
+        if (!item) return;
+
+        e.preventDefault();
+        e.stopPropagation();
+        window.__mobileBookmarkPanels.openByKey(key);
+    });
+
+    mqMobile.addEventListener('change', () => {
+        if (!mqMobile.matches) {
+            closeAllMobilePanels();
+            return;
+        }
+        syncMobileOverlayOffsets();
+    });
+
+    window.__mobilePanelsInitialized = true;
+});
+
+// ============================================
 // UTILITY FUNCTIONS
 // ============================================
 
@@ -592,7 +869,7 @@ function selectVariant(weight, price) {
     const selectedPriceEl = document.getElementById('selectedPrice');
     
     if (selectedWeightEl) {
-        selectedWeightEl.textContent = weight + 'g';
+        selectedWeightEl.textContent = weight === 0.5 ? '0.50g' : weight + 'g';
     }
     if (selectedPriceEl) {
         selectedPriceEl.textContent = '€' + price;
@@ -662,233 +939,268 @@ function updateFormPrice(price) {
 }
 
 // ============================================
-// PHOTO GALLERY SLIDER FUNCTIONALITY
+// PHOTO GALLERY — HERO + BANDĂ MINIATURI + LIGHTBOX
 // ============================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    const mainPhoto = document.getElementById('mainPhoto');
-    const thumbnails = document.querySelectorAll('.photo-thumbnail');
-    const prevBtn = document.querySelector('.photo-nav-prev');
-    const nextBtn = document.querySelector('.photo-nav-next');
-    const thumbnailsContainer = document.querySelector('.photo-thumbnails-container');
-    const fullscreenBtn = document.querySelector('.photo-fullscreen-btn');
+    const showcaseRoot = document.getElementById('premiumPhotoGallery');
+    const grid = document.getElementById('premiumGalleryGrid');
+    const thumbsTrack = document.getElementById('premiumGalleryThumbsTrack');
+    const thumbsViewport = document.getElementById('premiumGalleryThumbsViewport');
+    const heroImg = document.getElementById('premiumGalleryHeroImg');
+    const heroCard = document.querySelector('.premium-gallery-showcase__hero-card');
+    const expandBtn = document.getElementById('premiumGalleryExpand');
+    const stripPrev = document.getElementById('premiumGalleryStripPrev');
+    const stripNext = document.getElementById('premiumGalleryStripNext');
     const lightbox = document.getElementById('lightbox');
     const lightboxImage = document.getElementById('lightboxImage');
     const lightboxClose = document.querySelector('.lightbox-close');
     const lightboxPrev = document.querySelector('.lightbox-prev');
     const lightboxNext = document.querySelector('.lightbox-next');
-    
-    if (!mainPhoto || thumbnails.length === 0) return;
-    
-    // Array cu toate imaginile
-    const images = [
-        { src: 'img/IMG_8720.jpg', alt: 'Șofran Premium Bio VV Gold Saffron - Produs Principal' },
-        { src: 'img/saffron-p.webp', alt: 'Șofran Premium Bio - Calitate Superioară' },
-        { src: 'img/saffron-p-removebg-preview.png', alt: 'Șofran Premium Bio Certificat European' },
-        { src: 'img/IMG_8720.jpg', alt: 'Șofran Premium Bio - Cules Manual' },
-        { src: 'img/saffron-p.webp', alt: 'Șofran Premium Bio - Aromă Intensă' },
-        { src: 'img/saffron-p-removebg-preview.png', alt: 'Șofran Premium Bio - Direct de la Fermă' },
-        { src: 'img/IMG_8720.jpg', alt: 'Șofran Premium Bio - Procesare Naturală' },
-        { src: 'img/saffron-p.webp', alt: 'Șofran Premium Bio - Culoare Vibrantă' },
-        { src: 'img/saffron-p-removebg-preview.png', alt: 'Șofran Premium Bio - Calitate Premium' },
-        { src: 'img/IMG_8720.jpg', alt: 'Șofran Premium Bio - Tradiție și Calitate' }
-    ];
-    
-    let currentIndex = 0;
-    const visibleThumbnails = 5; // Numărul de thumbnails vizibile
-    let scrollPosition = 0;
-    
-    // Actualizează imaginea principală
-    function updateMainImage(index) {
-        if (index < 0 || index >= images.length) return;
-        
-        currentIndex = index;
-        mainPhoto.style.opacity = '0';
-        
-        setTimeout(() => {
-            mainPhoto.src = images[index].src;
-            mainPhoto.alt = images[index].alt;
-            mainPhoto.style.opacity = '1';
-        }, 150);
-        
-        // Actualizează thumbnails active
-        thumbnails.forEach((thumb, idx) => {
-            thumb.classList.toggle('active', idx === index);
-        });
-        
-        // Scroll thumbnails pentru a face thumbnail-ul activ vizibil
-        updateThumbnailsScroll();
-    }
-    
-    // Actualizează scroll-ul thumbnails
-    function updateThumbnailsScroll() {
-        if (!thumbnailsContainer || thumbnails.length === 0) return;
-        
-        // Obține dimensiunile reale (responsive)
-        const firstThumb = thumbnails[0];
-        const thumbnailWidth = firstThumb.offsetWidth + parseInt(getComputedStyle(thumbnailsContainer).gap) || 16;
-        const scrollContainer = thumbnailsContainer.parentElement;
-        const containerWidth = scrollContainer.offsetWidth - (prevBtn ? prevBtn.offsetWidth + 16 : 0) - (nextBtn ? nextBtn.offsetWidth + 16 : 0);
-        const maxScroll = Math.max(0, (thumbnails.length * thumbnailWidth) - containerWidth);
-        
-        // Calculează poziția pentru a centra thumbnail-ul activ
-        const targetScroll = (currentIndex * thumbnailWidth) - (containerWidth / 2) + (thumbnailWidth / 2);
-        scrollPosition = Math.max(0, Math.min(maxScroll, targetScroll));
-        
-        thumbnailsContainer.style.transform = `translateX(-${scrollPosition}px)`;
-    }
-    
-    // Navigare la imaginea următoare
-    function nextImage() {
-        const nextIndex = (currentIndex + 1) % images.length;
-        updateMainImage(nextIndex);
-    }
-    
-    // Navigare la imaginea anterioară
-    function prevImage() {
-        const prevIndex = (currentIndex - 1 + images.length) % images.length;
-        updateMainImage(prevIndex);
-    }
-    
-    // Event listeners pentru thumbnails
-    thumbnails.forEach((thumbnail, index) => {
-        thumbnail.addEventListener('click', function() {
-            updateMainImage(index);
-        });
-    });
-    
-    // Event listeners pentru butoanele de navigare
-    if (nextBtn) {
-        nextBtn.addEventListener('click', nextImage);
-    }
-    
-    if (prevBtn) {
-        prevBtn.addEventListener('click', prevImage);
-    }
-    
-    // Navigare cu tastatura
-    document.addEventListener('keydown', function(e) {
-        if (lightbox && lightbox.classList.contains('active')) return;
-        
-        switch(e.key) {
-            case 'ArrowRight':
-                nextImage();
-                break;
-            case 'ArrowLeft':
-                prevImage();
-                break;
-        }
-    });
-    
-    // Swipe gestures pentru mobile pe imaginea principală
-    let touchStartX = 0;
-    let touchEndX = 0;
-    const swipeThreshold = 50;
-    
-    if (mainPhoto) {
-        mainPhoto.addEventListener('touchstart', function(e) {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-        
-        mainPhoto.addEventListener('touchend', function(e) {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, { passive: true });
-    }
-    
-    function handleSwipe() {
-        const diff = touchStartX - touchEndX;
-        
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-                // Swipe left - next image
-                nextImage();
-            } else {
-                // Swipe right - previous image
-                prevImage();
+
+    if (!showcaseRoot || !grid || !thumbsTrack || !heroImg || !lightbox || !lightboxImage) return;
+
+    const bootstrapImgs = Array.from(grid.querySelectorAll(':scope > img'));
+    if (bootstrapImgs.length === 0) return;
+
+    const images = bootstrapImgs.map((img) => ({
+        src: img.getAttribute('src'),
+        alt: img.getAttribute('alt') || '',
+    }));
+
+    bootstrapImgs.forEach((img) => img.remove());
+    grid.remove();
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    /** @type {HTMLButtonElement[]} */
+    const thumbButtons = [];
+
+    images.forEach((item, idx) => {
+        const thumb = document.createElement('button');
+        thumb.type = 'button';
+        thumb.className = 'premium-gallery-showcase__thumb';
+        thumb.dataset.photoIndex = String(idx);
+        thumb.setAttribute('role', 'option');
+        thumb.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
+
+        const im = document.createElement('img');
+        im.src = item.src;
+        im.alt = item.alt || '';
+        im.loading = idx < 14 ? 'eager' : 'lazy';
+        im.decoding = 'async';
+
+        thumb.appendChild(im);
+        thumbsTrack.appendChild(thumb);
+        thumbButtons.push(thumb);
+
+        thumb.addEventListener('click', () => setGalleryIndex(idx));
+        thumb.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setGalleryIndex(idx);
             }
-        }
+        });
+    });
+
+    thumbsViewport?.setAttribute('role', 'listbox');
+
+    const countEl = document.getElementById('premiumPhotoCountTotal');
+    if (countEl) countEl.textContent = String(images.length);
+
+    refreshPremiumGalleryAria();
+
+    let currentIndex = 0;
+    let lightboxIndex = 0;
+    let lightboxLaunchFocus = null;
+
+    function scrollBehavior() {
+        return prefersReducedMotion ? 'auto' : 'smooth';
     }
-    
-    // Lightbox functionality
-    if (fullscreenBtn && lightbox) {
-        fullscreenBtn.addEventListener('click', function() {
-            openLightbox();
+
+    function scrollThumbRow(delta) {
+        if (!thumbsViewport) return;
+        const amt = thumbsViewport.clientWidth * 0.82;
+        thumbsViewport.scrollBy({ left: delta * amt, behavior: scrollBehavior() });
+    }
+
+    function scrollActiveThumbIntoView() {
+        const tb = thumbButtons[currentIndex];
+        if (!tb) return;
+        tb.scrollIntoView({ inline: 'center', block: 'nearest', behavior: scrollBehavior() });
+    }
+
+    function syncHero() {
+        const item = images[currentIndex];
+        if (!item || !heroImg) return;
+        heroImg.src = item.src;
+        heroImg.alt = item.alt || '';
+    }
+
+    function setGalleryIndex(idx) {
+        const n = images.length;
+        if (n === 0) return;
+        currentIndex = (idx % n + n) % n;
+        syncHero();
+        thumbButtons.forEach((b, i) => {
+            const on = i === currentIndex;
+            b.classList.toggle('is-active', on);
+            b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+        scrollActiveThumbIntoView();
+    }
+
+    setGalleryIndex(0);
+
+    if (expandBtn) {
+        expandBtn.setAttribute('aria-haspopup', 'dialog');
+        expandBtn.addEventListener('click', () => openLightbox(currentIndex));
+        expandBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openLightbox(currentIndex);
+            }
         });
     }
-    
-    function openLightbox() {
-        if (lightboxImages.length === 0) return;
-        
+
+    stripPrev?.addEventListener('click', () => scrollThumbRow(-1));
+    stripNext?.addEventListener('click', () => scrollThumbRow(1));
+
+    if (heroCard) {
+        heroCard.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                setGalleryIndex(currentIndex + 1);
+            }
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                setGalleryIndex(currentIndex - 1);
+            }
+            if ((e.key === 'Enter' || e.key === ' ') && !(e.target && e.target.closest('button'))) {
+                e.preventDefault();
+                openLightbox(currentIndex);
+            }
+        });
+
+        let hStart = 0;
+        heroCard.addEventListener(
+            'touchstart',
+            (e) => {
+                if (e.target && e.target.closest('button')) return;
+                hStart = e.changedTouches[0].screenX;
+            },
+            { passive: true },
+        );
+        heroCard.addEventListener(
+            'touchend',
+            (e) => {
+                if (e.target && e.target.closest('button')) return;
+                const dx = e.changedTouches[0].screenX - hStart;
+                if (Math.abs(dx) < 40) return;
+                if (dx < 0) setGalleryIndex(currentIndex + 1);
+                else setGalleryIndex(currentIndex - 1);
+            },
+            { passive: true },
+        );
+    }
+
+    if (thumbsViewport) {
+        thumbsViewport.addEventListener('keydown', (e) => {
+            if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+            e.preventDefault();
+            if (e.key === 'ArrowRight') setGalleryIndex(currentIndex + 1);
+            else setGalleryIndex(currentIndex - 1);
+        });
+    }
+
+    function updateLightboxImage() {
+        const item = images[lightboxIndex];
+        if (!item) return;
+        lightboxImage.src = item.src;
+        lightboxImage.alt = item.alt || '';
+    }
+
+    function openLightbox(index) {
+        lightboxIndex = index;
+        if (lightboxIndex < 0 || lightboxIndex >= images.length) return;
+        setGalleryIndex(lightboxIndex);
+        lightboxLaunchFocus = document.activeElement;
         updateLightboxImage();
         lightbox.classList.add('active');
+        lightbox.setAttribute('aria-modal', 'true');
         document.body.style.overflow = 'hidden';
-        
         setTimeout(() => {
             lightbox.style.opacity = '1';
+            lightboxClose?.focus();
         }, 10);
     }
-    
+
     function closeLightbox() {
-        if (!lightbox) return;
         lightbox.style.opacity = '0';
+        lightbox.setAttribute('aria-modal', 'false');
+        const returnFocusEl =
+            lightboxLaunchFocus && typeof lightboxLaunchFocus.focus === 'function'
+                ? lightboxLaunchFocus
+                : expandBtn || thumbButtons[lightboxIndex];
         setTimeout(() => {
             lightbox.classList.remove('active');
             document.body.style.overflow = '';
+            setGalleryIndex(lightboxIndex);
+            returnFocusEl?.focus?.({ preventScroll: true });
+            lightboxLaunchFocus = null;
         }, 300);
     }
-    
-    function updateLightboxImage() {
-        if (lightboxImage && images[currentIndex]) {
-            lightboxImage.src = images[currentIndex].src;
-            lightboxImage.alt = images[currentIndex].alt;
-        }
-    }
-    
+
     function nextLightboxImage() {
-        const nextIndex = (currentIndex + 1) % images.length;
-        currentIndex = nextIndex;
+        lightboxIndex = (lightboxIndex + 1) % images.length;
         updateLightboxImage();
     }
-    
+
     function prevLightboxImage() {
-        const prevIndex = (currentIndex - 1 + images.length) % images.length;
-        currentIndex = prevIndex;
+        lightboxIndex = (lightboxIndex - 1 + images.length) % images.length;
         updateLightboxImage();
     }
-    
-    const lightboxImages = images;
-    
-    if (lightboxClose) {
-        lightboxClose.addEventListener('click', closeLightbox);
-    }
-    
+
+    let touchLX = 0;
+    lightbox.addEventListener(
+        'touchstart',
+        (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            touchLX = e.changedTouches[0].screenX;
+        },
+        { passive: true },
+    );
+    lightbox.addEventListener(
+        'touchend',
+        (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            const dx = e.changedTouches[0].screenX - touchLX;
+            if (Math.abs(dx) < 56) return;
+            if (dx < 0) nextLightboxImage();
+            else prevLightboxImage();
+        },
+        { passive: true },
+    );
+
+    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
     if (lightboxNext) {
         lightboxNext.addEventListener('click', (e) => {
             e.stopPropagation();
             nextLightboxImage();
         });
     }
-    
     if (lightboxPrev) {
         lightboxPrev.addEventListener('click', (e) => {
             e.stopPropagation();
             prevLightboxImage();
         });
     }
-    
-    if (lightbox) {
-        lightbox.addEventListener('click', function(e) {
-            if (e.target === lightbox) {
-                closeLightbox();
-            }
-        });
-    }
-    
+    lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox) closeLightbox();
+    });
+
     document.addEventListener('keydown', function(e) {
-        if (!lightbox || !lightbox.classList.contains('active')) return;
-        
-        switch(e.key) {
+        if (!lightbox.classList.contains('active')) return;
+        switch (e.key) {
             case 'Escape':
                 closeLightbox();
                 break;
@@ -898,19 +1210,9 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'ArrowLeft':
                 prevLightboxImage();
                 break;
+            default:
+                break;
         }
-    });
-    
-    // Inițializează
-    updateMainImage(0);
-    
-    // Responsive: actualizează scroll la resize
-    let resizeTimer;
-    window.addEventListener('resize', function() {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            updateThumbnailsScroll();
-        }, 250);
     });
 });
 
@@ -1192,10 +1494,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     bookmarkTab.addEventListener('click', handleBookmarkToggle);
-    bookmarkTab.addEventListener('touchend', function(e) {
-        e.preventDefault();
-        handleBookmarkToggle(e);
-    }, { passive: false });
     
     // Mobile bookmark button
     const bookmarkTabMobile = document.getElementById('bookmarkTabMobile');
@@ -1203,7 +1501,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileAwardsPanelInner = document.getElementById('mobileAwardsPanelInner');
     const awardsBookmarkMobile = bookmarkTabMobile ? bookmarkTabMobile.closest('.awards-bookmark-mobile') : null;
     
-    if (bookmarkTabMobile && awardsBookmarkMobile) {
+    if (bookmarkTabMobile && awardsBookmarkMobile && !window.__mobilePanelsInitialized) {
         // Copy content from desktop panel to mobile panel
         function copyAwardsContent() {
             if (awardsPanel && mobileAwardsPanelInner) {
@@ -1224,17 +1522,19 @@ document.addEventListener('DOMContentLoaded', function() {
         function handleMobileAwardsToggle(e) {
             e.preventDefault();
             e.stopPropagation();
-            const isOpen = awardsBookmarkMobile.classList.contains('open');
+            const isOpen = mobileAwardsPanel.classList.contains('open');
             
             // Close all mobile panels
             document.querySelectorAll('.awards-bookmark-mobile, .press-bookmark-mobile, .certificates-bookmark-mobile').forEach(el => {
                 el.classList.remove('open');
             });
+            document.querySelectorAll('.mobile-panel').forEach(panel => panel.classList.remove('open'));
             
             if (!isOpen) {
                 // Copy content before opening (in case it changed)
                 copyAwardsContent();
                 awardsBookmarkMobile.classList.add('open');
+                mobileAwardsPanel.classList.add('open');
             }
         }
         
@@ -1252,6 +1552,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (e.target.closest('.awards-close')) {
                     e.preventDefault();
                     awardsBookmarkMobile.classList.remove('open');
+                    mobileAwardsPanel.classList.remove('open');
                 }
             });
         }
@@ -1261,6 +1562,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (awardsBookmarkMobile.classList.contains('open')) {
                 if (!awardsBookmarkMobile.contains(e.target) && !mobileAwardsPanel.contains(e.target)) {
                     awardsBookmarkMobile.classList.remove('open');
+                    mobileAwardsPanel.classList.remove('open');
                 }
             }
         });
@@ -1274,10 +1576,6 @@ document.addEventListener('DOMContentLoaded', function() {
             closeAwardsPanel();
         }
         awardsClose.addEventListener('click', handleClose);
-        awardsClose.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            handleClose(e);
-        }, { passive: false });
     }
     
     // Close on click outside
@@ -1392,10 +1690,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
         pressTab.addEventListener('click', handlePressToggle);
-        pressTab.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            handlePressToggle(e);
-        }, { passive: false });
         
         // Mobile press button
         const pressTabMobile = document.getElementById('pressTabMobile');
@@ -1403,7 +1697,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const mobilePressPanelInner = document.getElementById('mobilePressPanelInner');
         const pressBookmarkMobile = pressTabMobile ? pressTabMobile.closest('.press-bookmark-mobile') : null;
         
-        if (pressTabMobile && pressBookmarkMobile) {
+        if (pressTabMobile && pressBookmarkMobile && !window.__mobilePanelsInitialized) {
             // Copy content from desktop panel to mobile panel
             function copyPressContent() {
                 if (pressPanel && mobilePressPanelInner) {
@@ -1424,17 +1718,19 @@ document.addEventListener('DOMContentLoaded', function() {
             function handleMobilePressToggle(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                const isOpen = pressBookmarkMobile.classList.contains('open');
+                const isOpen = mobilePressPanel.classList.contains('open');
                 
                 // Close all mobile panels
                 document.querySelectorAll('.awards-bookmark-mobile, .press-bookmark-mobile, .certificates-bookmark-mobile').forEach(el => {
                     el.classList.remove('open');
                 });
+                document.querySelectorAll('.mobile-panel').forEach(panel => panel.classList.remove('open'));
                 
                 if (!isOpen) {
                     // Copy content before opening (in case it changed)
                     copyPressContent();
                     pressBookmarkMobile.classList.add('open');
+                    mobilePressPanel.classList.add('open');
                 }
             }
             
@@ -1452,6 +1748,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (e.target.closest('.press-close')) {
                         e.preventDefault();
                         pressBookmarkMobile.classList.remove('open');
+                        mobilePressPanel.classList.remove('open');
                     }
                 });
             }
@@ -1461,6 +1758,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (pressBookmarkMobile.classList.contains('open')) {
                     if (!pressBookmarkMobile.contains(e.target) && !mobilePressPanel.contains(e.target)) {
                         pressBookmarkMobile.classList.remove('open');
+                        mobilePressPanel.classList.remove('open');
                     }
                 }
             });
@@ -1474,10 +1772,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 closePressPanel();
             }
             pressClose.addEventListener('click', handlePressClose);
-            pressClose.addEventListener('touchend', function(e) {
-                e.preventDefault();
-                handlePressClose(e);
-            }, { passive: false });
         }
         
         // Close on click outside
@@ -1547,10 +1841,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     certificatesTab.addEventListener('click', handleCertificatesToggle);
-    certificatesTab.addEventListener('touchend', function(e) {
-        e.preventDefault();
-        handleCertificatesToggle(e);
-    }, { passive: false });
     
     // Mobile certificates button
     const certificatesTabMobile = document.getElementById('certificatesTabMobile');
@@ -1558,7 +1848,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const mobileCertificatesPanelInner = document.getElementById('mobileCertificatesPanelInner');
     const certificatesBookmarkMobile = certificatesTabMobile ? certificatesTabMobile.closest('.certificates-bookmark-mobile') : null;
     
-    if (certificatesTabMobile && certificatesBookmarkMobile) {
+    if (certificatesTabMobile && certificatesBookmarkMobile && !window.__mobilePanelsInitialized) {
         // Copy content from desktop panel to mobile panel
         function copyCertificatesContent() {
             if (certificatesPanel && mobileCertificatesPanelInner) {
@@ -1584,17 +1874,19 @@ document.addEventListener('DOMContentLoaded', function() {
         function handleMobileCertificatesToggle(e) {
             e.preventDefault();
             e.stopPropagation();
-            const isOpen = certificatesBookmarkMobile.classList.contains('open');
+            const isOpen = mobileCertificatesPanel.classList.contains('open');
             
             // Close all mobile panels
             document.querySelectorAll('.awards-bookmark-mobile, .press-bookmark-mobile, .certificates-bookmark-mobile').forEach(el => {
                 el.classList.remove('open');
             });
+            document.querySelectorAll('.mobile-panel').forEach(panel => panel.classList.remove('open'));
             
             if (!isOpen) {
                 // Copy content before opening (in case it changed)
                 copyCertificatesContent();
                 certificatesBookmarkMobile.classList.add('open');
+                mobileCertificatesPanel.classList.add('open');
             }
         }
         
@@ -1612,6 +1904,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (e.target.closest('.certificates-close')) {
                     e.preventDefault();
                     certificatesBookmarkMobile.classList.remove('open');
+                    mobileCertificatesPanel.classList.remove('open');
                 }
             });
         }
@@ -1621,6 +1914,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (certificatesBookmarkMobile.classList.contains('open')) {
                 if (!certificatesBookmarkMobile.contains(e.target) && !mobileCertificatesPanel.contains(e.target)) {
                     certificatesBookmarkMobile.classList.remove('open');
+                    mobileCertificatesPanel.classList.remove('open');
                 }
             }
         });
@@ -1634,10 +1928,6 @@ document.addEventListener('DOMContentLoaded', function() {
             closeCertificatesPanel();
         }
         certificatesClose.addEventListener('click', handleCertificatesClose);
-        certificatesClose.addEventListener('touchend', function(e) {
-            e.preventDefault();
-            handleCertificatesClose(e);
-        }, { passive: false });
     }
     
     // Close on click outside
@@ -1655,6 +1945,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (certificatesBookmark.classList.contains('open')) {
                 closeCertificatesPanel();
             }
+
         }
     });
     

@@ -76,6 +76,16 @@
   "gallery": {
     "label": "Galerie",
     "title": "Galerie Foto",
+    "tagline": "Momente din plantație și produs — cules manual, calitate BIO.",
+    "imagesCountSuffix": "fotografii",
+    "tapEnlarge": "Miniaturile de mai sus derulează orizontal. Butonul din colț deschide imaginea mare.",
+    "selectThumbAria": "Alege fotografia {n} din {total}",
+    "expandPhoto": "Deschide pe ecran complet",
+    "thumbnailStripLabel": "Lista miniaturilor galeriei",
+    "thumbStripPrev": "Derulează miniaturile spre stânga",
+    "thumbStripNext": "Derulează miniaturile spre dreapta",
+    "heroFocusLabel": "Fotografie mare din galerie. Folosește săgețile pentru a schimba imaginea; Enter pentru ecran complet.",
+    "openPhotoAria": "Deschide fotografia {n} din {total}",
     "videoTitle": "Galerie Video",
     "prev": "Prev",
     "next": "Next"

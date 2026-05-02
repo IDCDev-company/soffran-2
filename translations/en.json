@@ -76,6 +76,16 @@
   "gallery": {
     "label": "Gallery",
     "title": "Photo Gallery",
+    "tagline": "Moments from our fields and product — hand-picked, certified organic quality.",
+    "imagesCountSuffix": "photos",
+    "tapEnlarge": "Scroll the thumbnail strip below. Use the corner button for full-screen view.",
+    "selectThumbAria": "Select photo {n} of {total}",
+    "expandPhoto": "Open full-screen",
+    "thumbnailStripLabel": "Gallery thumbnails list",
+    "thumbStripPrev": "Scroll thumbnails left",
+    "thumbStripNext": "Scroll thumbnails right",
+    "heroFocusLabel": "Main gallery photo. Arrow keys change the image; Enter opens full-screen.",
+    "openPhotoAria": "Open photo {n} of {total}",
     "videoTitle": "Video Gallery",
     "prev": "Prev",
     "next": "Next"

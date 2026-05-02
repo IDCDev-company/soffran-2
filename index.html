@@ -25,10 +25,18 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="premium-loader" id="premiumLoader" aria-hidden="true">
+        <div class="premium-loader__inner">
+            <div class="premium-loader__ring"></div>
+            <div class="premium-loader__brand">VV Gold Saffron</div>
+            <div class="premium-loader__tagline">Premium Bio Experience</div>
+        </div>
+    </div>
+
     <div class="announcement-bar" aria-live="polite">
         <div class="announcement-bar__track">
-            <span class="announcement-bar__content" data-i18n="announcement.text">Șofran premium certificat BIO european (Kiwa) • Cules manual, uscat natural • Direct de la fermă la consumator • Visionary Brand 2025 • Brand de Referință • Top Premium Quality Brand • Comandă: info@vvgoldsaffron.com • +373 79 994 997</span>
-            <span class="announcement-bar__content" aria-hidden="true" data-i18n="announcement.text">Șofran premium certificat BIO european (Kiwa) • Cules manual, uscat natural • Direct de la fermă la consumator • Visionary Brand 2025 • Brand de Referință • Top Premium Quality Brand • Comandă: info@vvgoldsaffron.com • +373 79 994 997</span>
+            <span class="announcement-bar__content" data-i18n="announcement.text">Șofran premium certificat BIO european (Kiwa) • Cules manual și uscat natural • Direct de la fermă la consumator • Ambasador al Șofranului în Chișinău • Visionary Brand 2025 • Brand de Referință • Top Premium Quality Brand • Comandă: info@vvgoldsaffron.com • Telefon: +373 79 994 997</span>
+            <span class="announcement-bar__content" aria-hidden="true" data-i18n="announcement.text">Șofran premium certificat BIO european (Kiwa) • Cules manual și uscat natural • Direct de la fermă la consumator • Ambasador al Șofranului în Chișinău • Visionary Brand 2025 • Brand de Referință • Top Premium Quality Brand • Comandă: info@vvgoldsaffron.com • Telefon: +373 79 994 997</span>
         </div>
     </div>
     <nav class="navbar">
@@ -56,10 +64,15 @@
             </div>
             <div class="nav-links">
                 <a href="#despre" class="nav-link" data-i18n="nav.about">Despre</a>
+                <a href="#ambasada-qatar" class="nav-link">Ambasada Qatar</a>
                 <a href="#beneficii" class="nav-link" data-i18n="nav.benefits">Beneficii</a>
                 <a href="#produs" class="nav-link" data-i18n="nav.product">Produs</a>
                 <a href="#photo-gallery" class="nav-link" data-i18n="nav.gallery">Galerie</a>
-                <a href="#certificate" class="nav-link" data-i18n="nav.certificates">Certificări</a>
+                <span class="nav-mobile-divider is-mobile-only" role="presentation" aria-hidden="true"></span>
+                <button type="button" class="nav-link nav-quick is-mobile-only" data-mobile-bookmark="awards" data-i18n="awards.bookmarkText">Trofee</button>
+                <button type="button" class="nav-link nav-quick is-mobile-only" data-mobile-bookmark="press" data-i18n="press.bookmarkText">Presă</button>
+                <button type="button" class="nav-link nav-quick is-mobile-only" data-mobile-bookmark="certificates" data-i18n="certificates.bookmarkText">Certificări</button>
+                <a href="#certificate" class="nav-link is-desktop-only" data-i18n="nav.certificates">Certificări</a>
                 <a href="#achizitie" class="nav-link" data-i18n="nav.purchase">Achiziție</a>
                 <a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a>
             </div>
@@ -473,6 +486,26 @@
         </div>
     </section>
 
+    <section class="qatar-embassy" id="ambasada-qatar">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Recunoaștere Oficială</span>
+                <h2 class="section-title">Ambasada Qatar</h2>
+            </div>
+            <div class="qatar-embassy__content">
+                <p class="lead-text">
+                    VV Gold Saffron a primit titlul de <strong>Ambasador al Șofranului în Chișinău</strong>, o recunoaștere care confirmă poziționarea brandului nostru în zona premium.
+                </p>
+                <p class="body-text">
+                    Această distincție evidențiază misiunea noastră de a promova șofranul autentic, cules manual și certificat BIO european, prin standarde ridicate de calitate, eleganță și încredere.
+                </p>
+                <p class="body-text">
+                    Pentru noi, acest titlu reprezintă responsabilitatea de a duce mai departe o cultură a excelenței și de a consolida legătura dintre tradiție, inovație și diplomație gastronomică.
+                </p>
+            </div>
+        </div>
+    </section>
+
     <!-- Statistics Section -->
     <section class="statistics" id="statistics">
         <div class="container">
@@ -656,25 +689,20 @@
                         <div class="product-pricing">
                             <h4 class="pricing-title" data-i18n="product.pricingTitle">Selectează cantitatea</h4>
                             <div class="product-variants">
-                                <div class="variant-card" data-weight="0.1" data-price="10">
-                                    <div class="variant-weight">0.1g</div>
-                                    <div class="variant-price">€10</div>
-                                    <button class="btn-variant" onclick="selectVariant(0.1, 10)" data-i18n="product.selectVariant">Selectează</button>
-                                </div>
-                                <div class="variant-card" data-weight="0.25" data-price="20">
+                                <div class="variant-card" data-weight="0.25" data-price="40">
                                     <div class="variant-weight">0.25g</div>
-                                    <div class="variant-price">€20</div>
-                                    <button class="btn-variant" onclick="selectVariant(0.25, 20)" data-i18n="product.selectVariant">Selectează</button>
+                                    <div class="variant-price">€40</div>
+                                    <button class="btn-variant" onclick="selectVariant(0.25, 40)" data-i18n="product.selectVariant">Selectează</button>
                                 </div>
-                                <div class="variant-card" data-weight="0.5" data-price="30">
-                                    <div class="variant-weight">0.5g</div>
-                                    <div class="variant-price">€30</div>
-                                    <button class="btn-variant" onclick="selectVariant(0.5, 30)" data-i18n="product.selectVariant">Selectează</button>
+                                <div class="variant-card" data-weight="0.5" data-price="60">
+                                    <div class="variant-weight">0.50g</div>
+                                    <div class="variant-price">€60</div>
+                                    <button class="btn-variant" onclick="selectVariant(0.5, 60)" data-i18n="product.selectVariant">Selectează</button>
                                 </div>
-                                <div class="variant-card variant-selected" data-weight="1" data-price="50">
+                                <div class="variant-card variant-selected" data-weight="1" data-price="90">
                                     <div class="variant-weight">1g</div>
-                                    <div class="variant-price">€50</div>
-                                    <button class="btn-variant" onclick="selectVariant(1, 50)" data-i18n="product.selectVariant">Selectează</button>
+                                    <div class="variant-price">€90</div>
+                                    <button class="btn-variant" onclick="selectVariant(1, 90)" data-i18n="product.selectVariant">Selectează</button>
                                 </div>
                             </div>
                             
@@ -685,7 +713,7 @@
                                 </div>
                                 <div class="selected-price">
                                     <span class="price-label" data-i18n="product.price">Preț:</span>
-                                    <span class="price-value" id="selectedPrice">€50</span>
+                                    <span class="price-value" id="selectedPrice">€90</span>
                                 </div>
                             </div>
                             
@@ -701,83 +729,106 @@
     </section>
 
     <!-- Photo Gallery Section -->
-    <section class="photo-gallery" id="photo-gallery">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label" data-i18n="gallery.label">Galerie</span>
-                <h2 class="section-title" data-i18n="gallery.title">Galerie Foto</h2>
-            </div>
-            
-            <div class="photo-gallery-wrapper">
-                <!-- Main Image Display -->
-                <div class="photo-main-container">
-                    <div class="photo-main-wrapper">
-                        <img src="img/IMG_8720.jpg" alt="Șofran Premium Bio VV Gold Saffron" class="photo-main-image" id="mainPhoto" loading="lazy">
-                        <div class="photo-main-overlay">
-                            <button class="photo-fullscreen-btn" aria-label="Vizualizare completă">
-                                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
+    <section class="photo-gallery photo-gallery--premium" id="photo-gallery">
+        <div class="container photo-gallery__container">
+            <header class="premium-gallery__head">
+                <div class="premium-gallery__head-inner">
+                    <span class="section-label premium-gallery__eyebrow" data-i18n="gallery.label">Galerie</span>
+                    <h2 class="premium-gallery__title section-title" data-i18n="gallery.title">Galerie Foto</h2>
+                    <p class="premium-gallery__tagline" data-i18n="gallery.tagline">Momente din plantație și produs — cules manual, calitate BIO.</p>
                 </div>
-                
-                <!-- Thumbnail Navigation -->
-                <div class="photo-thumbnails">
-                    <button class="photo-nav-btn photo-nav-prev" aria-label="Anterior">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="15 18 9 12 15 6"></polyline>
-                        </svg>
+            </header>
+            <div class="premium-gallery-showcase" id="premiumPhotoGallery" aria-label="Galerie foto">
+                <div class="premium-gallery-showcase__hero">
+                    <figure class="premium-gallery-showcase__hero-card">
+                        <img src="poze sofran galerie/IMG_0390.JPG" alt="Galerie șofran 1" class="premium-gallery-showcase__hero-img" id="premiumGalleryHeroImg" width="1600" height="1000" loading="eager" decoding="async">
+                        <button type="button" class="premium-gallery-showcase__expand" id="premiumGalleryExpand">
+                            <span class="premium-gallery-showcase__expand-visual" aria-hidden="true">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="square">
+                                    <path d="M10 10H7V7M14 10h3V7M14 14h3v3M10 14H7v3"/>
+                                </svg>
+                            </span>
+                        </button>
+                    </figure>
+                </div>
+                <div class="premium-gallery-showcase__thumb-shell">
+                    <button type="button" class="premium-gallery-showcase__strip-btn premium-gallery-showcase__strip-btn--prev" id="premiumGalleryStripPrev" aria-label="Derulează miniaturile">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
                     </button>
-                    
-                    <div class="photo-thumbnails-scroll">
-                        <div class="photo-thumbnails-container">
-                            <div class="photo-thumbnail active" data-index="0">
-                                <img src="img/IMG_8720.jpg" alt="Thumbnail 1" loading="lazy">
-                            </div>
-                            <div class="photo-thumbnail" data-index="1">
-                                <img src="img/saffron-p.webp" alt="Thumbnail 2" loading="lazy">
-                            </div>
-                            <div class="photo-thumbnail" data-index="2">
-                                <img src="img/saffron-p-removebg-preview.png" alt="Thumbnail 3" loading="lazy">
-                            </div>
-                            <div class="photo-thumbnail" data-index="3">
-                                <img src="img/IMG_8720.jpg" alt="Thumbnail 4" loading="lazy">
-                            </div>
-                            <div class="photo-thumbnail" data-index="4">
-                                <img src="img/saffron-p.webp" alt="Thumbnail 5" loading="lazy">
-                            </div>
-                            <div class="photo-thumbnail" data-index="5">
-                                <img src="img/saffron-p-removebg-preview.png" alt="Thumbnail 6" loading="lazy">
-                            </div>
-                            <div class="photo-thumbnail" data-index="6">
-                                <img src="img/IMG_8720.jpg" alt="Thumbnail 7" loading="lazy">
-                            </div>
-                            <div class="photo-thumbnail" data-index="7">
-                                <img src="img/saffron-p.webp" alt="Thumbnail 8" loading="lazy">
-                            </div>
-                            <div class="photo-thumbnail" data-index="8">
-                                <img src="img/saffron-p-removebg-preview.png" alt="Thumbnail 9" loading="lazy">
-                            </div>
-                            <div class="photo-thumbnail" data-index="9">
-                                <img src="img/IMG_8720.jpg" alt="Thumbnail 10" loading="lazy">
-                            </div>
-                        </div>
+                    <div class="premium-gallery-showcase__thumbs-viewport" id="premiumGalleryThumbsViewport" tabindex="0">
+                        <div class="premium-gallery-showcase__thumbs-track" id="premiumGalleryThumbsTrack"></div>
                     </div>
-                    
-                    <button class="photo-nav-btn photo-nav-next" aria-label="Următor">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="9 18 15 12 9 6"></polyline>
-                        </svg>
+                    <button type="button" class="premium-gallery-showcase__strip-btn premium-gallery-showcase__strip-btn--next" id="premiumGalleryStripNext" aria-label="Derulează miniaturile">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
                     </button>
+                </div>
+                <p class="premium-gallery-showcase__footer"><span><strong id="premiumPhotoCountTotal" class="premium-gallery-showcase__count">58</strong> <span data-i18n="gallery.imagesCountSuffix">fotografii</span></span><span class="premium-gallery-showcase__dot" aria-hidden="true">·</span><span data-i18n="gallery.tapEnlarge">Miniaturile de mai sus derulează orizontal. Butonul din colț deschide imaginea mare.</span></p>
+                <div id="premiumGalleryGrid" class="premium-gallery-sources" aria-hidden="true">
+                <img src="poze sofran galerie/IMG_0390.JPG" alt="Galerie șofran 1" loading="lazy">
+                <img src="poze sofran galerie/IMG_0391.JPG" alt="Galerie șofran 2" loading="lazy">
+                <img src="poze sofran galerie/IMG_0842.JPG" alt="Galerie șofran 3" loading="lazy">
+                <img src="poze sofran galerie/IMG_1063.JPG" alt="Galerie șofran 4" loading="lazy">
+                <img src="poze sofran galerie/IMG_1075.JPG" alt="Galerie șofran 5" loading="lazy">
+                <img src="poze sofran galerie/IMG_1482.JPG" alt="Galerie șofran 6" loading="lazy">
+                <img src="poze sofran galerie/IMG_1677.JPG" alt="Galerie șofran 7" loading="lazy">
+                <img src="poze sofran galerie/IMG_1680.JPG" alt="Galerie șofran 8" loading="lazy">
+                <img src="poze sofran galerie/IMG_1744.JPG" alt="Galerie șofran 9" loading="lazy">
+                <img src="poze sofran galerie/IMG_1952.JPG" alt="Galerie șofran 10" loading="lazy">
+                <img src="poze sofran galerie/IMG_2575.JPG" alt="Galerie șofran 11" loading="lazy">
+                <img src="poze sofran galerie/IMG_2767.JPG" alt="Galerie șofran 12" loading="lazy">
+                <img src="poze sofran galerie/IMG_2851.JPG" alt="Galerie șofran 13" loading="lazy">
+                <img src="poze sofran galerie/IMG_2852.JPG" alt="Galerie șofran 14" loading="lazy">
+                <img src="poze sofran galerie/IMG_2853.JPG" alt="Galerie șofran 15" loading="lazy">
+                <img src="poze sofran galerie/IMG_2914.JPG" alt="Galerie șofran 16" loading="lazy">
+                <img src="poze sofran galerie/IMG_6458.JPG" alt="Galerie șofran 17" loading="lazy">
+                <img src="poze sofran galerie/IMG_6563.JPG" alt="Galerie șofran 18" loading="lazy">
+                <img src="poze sofran galerie/IMG_7395.JPG" alt="Galerie șofran 19" loading="lazy">
+                <img src="poze sofran galerie/IMG_7533.JPG" alt="Galerie șofran 20" loading="lazy">
+                <img src="poze sofran galerie/IMG_8019.JPG" alt="Galerie șofran 21" loading="lazy">
+                <img src="poze sofran galerie/IMG_8021.JPG" alt="Galerie șofran 22" loading="lazy">
+                <img src="poze sofran galerie/IMG_8031.JPG" alt="Galerie șofran 23" loading="lazy">
+                <img src="poze sofran galerie/IMG_8038.JPG" alt="Galerie șofran 24" loading="lazy">
+                <img src="poze sofran galerie/IMG_8787.JPG" alt="Galerie șofran 25" loading="lazy">
+                <img src="poze sofran galerie/IMG_8830.JPG" alt="Galerie șofran 26" loading="lazy">
+                <img src="poze sofran galerie/IMG_9245.JPG" alt="Galerie șofran 27" loading="lazy">
+                <img src="poze sofran galerie/IMG_9269.JPG" alt="Galerie șofran 28" loading="lazy">
+                <img src="poze sofran galerie/IMG_9390.JPG" alt="Galerie șofran 29" loading="lazy">
+                <img src="poze sofran galerie/IMG_9504.JPG" alt="Galerie șofran 30" loading="lazy">
+                <img src="poze sofran galerie/IMG_9526.JPG" alt="Galerie șofran 31" loading="lazy">
+                <img src="poze sofran galerie/IMG_9527.JPG" alt="Galerie șofran 32" loading="lazy">
+                <img src="poze sofran galerie/IMG_9662.JPG" alt="Galerie șofran 33" loading="lazy">
+                <img src="poze sofran galerie/IMG_9664.JPG" alt="Galerie șofran 34" loading="lazy">
+                <img src="poze sofran galerie/IMG_9829.JPG" alt="Galerie șofran 35" loading="lazy">
+                <img src="poze sofran galerie/IMG_9839.JPG" alt="Galerie șofran 36" loading="lazy">
+                <img src="poze sofran galerie/IMG_9861.JPG" alt="Galerie șofran 37" loading="lazy">
+                <img src="poze sofran galerie/IMG_9878.JPG" alt="Galerie șofran 38" loading="lazy">
+                <img src="poze sofran galerie/IMG_9880.JPG" alt="Galerie șofran 39" loading="lazy">
+                <img src="poze sofran galerie/IMG_9881.JPG" alt="Galerie șofran 40" loading="lazy">
+                <img src="poze sofran galerie/IMG_9882.JPG" alt="Galerie șofran 41" loading="lazy">
+                <img src="poze sofran galerie/IMG_9885.JPG" alt="Galerie șofran 42" loading="lazy">
+                <img src="poze sofran galerie/IMG_9891.JPG" alt="Galerie șofran 43" loading="lazy">
+                <img src="poze sofran galerie/B9811C7B-840C-41DA-BC38-0BFF880C2424.JPG" alt="Galerie șofran 44" loading="lazy">
+                <img src="poze sofran galerie/IMG_9853%20(1).JPG" alt="Galerie șofran 45" loading="lazy">
+                <img src="poze sofran galerie/IMG_9855%20(2).JPG" alt="Galerie șofran 46" loading="lazy">
+                <img src="poze sofran galerie/AFE85006-103E-4845-8F17-6E1AE383E17E.HEIC" alt="Galerie șofran 47" loading="lazy">
+                <img src="poze sofran galerie/IMG_1726.HEIC" alt="Galerie șofran 48" loading="lazy">
+                <img src="poze sofran galerie/IMG_2057.HEIC" alt="Galerie șofran 49" loading="lazy">
+                <img src="poze sofran galerie/IMG_7752.HEIC" alt="Galerie șofran 50" loading="lazy">
+                <img src="poze sofran galerie/IMG_7865.HEIC" alt="Galerie șofran 51" loading="lazy">
+                <img src="poze sofran galerie/IMG_7894.HEIC" alt="Galerie șofran 52" loading="lazy">
+                <img src="poze sofran galerie/IMG_8272.HEIC" alt="Galerie șofran 53" loading="lazy">
+                <img src="poze sofran galerie/IMG_9307.HEIC" alt="Galerie șofran 54" loading="lazy">
+                <img src="poze sofran galerie/IMG_9308.HEIC" alt="Galerie șofran 55" loading="lazy">
+                <img src="poze sofran galerie/IMG_9324.HEIC" alt="Galerie șofran 56" loading="lazy">
+                <img src="poze sofran galerie/IMG_9443.HEIC" alt="Galerie șofran 57" loading="lazy">
+                <img src="poze sofran galerie/IMG_9492.HEIC" alt="Galerie șofran 58" loading="lazy">
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Lightbox Modal -->
-    <div class="lightbox" id="lightbox">
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="false" aria-label="Imagine mărită din galerie">
         <button class="lightbox-close" aria-label="Închide lightbox">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -805,7 +856,7 @@
         <div class="gallery">
             <ul class="cards">
                 <li>
-                    <video src="video/reel1.mp4" loop playsinline preload="metadata"></video>
+                    <video src="poze sofran galerie/6DE5FDAE-3645-4322-9C57-9DF12D84296C.MOV" loop playsinline preload="metadata"></video>
                     <button class="video-control play-pause" aria-label="Play/Pause">
                         <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M8 5v14l11-7z"/>
@@ -824,7 +875,7 @@
                     </button>
                 </li>
                 <li>
-                    <video src="video/reel1.mp4" loop playsinline preload="metadata"></video>
+                    <video src="poze sofran galerie/IMG_0977.MOV" loop playsinline preload="metadata"></video>
                     <button class="video-control play-pause" aria-label="Play/Pause">
                         <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M8 5v14l11-7z"/>
@@ -843,7 +894,7 @@
                     </button>
                 </li>
                 <li>
-                    <video src="video/reel2.mp4" loop playsinline preload="metadata"></video>
+                    <video src="poze sofran galerie/IMG_9323.MOV" loop playsinline preload="metadata"></video>
                     <button class="video-control play-pause" aria-label="Play/Pause">
                         <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M8 5v14l11-7z"/>
@@ -862,159 +913,7 @@
                     </button>
                 </li>
                 <li>
-                    <video src="video/reel3.mp4" loop playsinline preload="metadata"></video>
-                    <button class="video-control play-pause" aria-label="Play/Pause">
-                        <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M8 5v14l11-7z"/>
-                        </svg>
-                        <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                        </svg>
-                    </button>
-                    <button class="video-control mute-unmute" aria-label="Mute/Unmute">
-                        <svg class="mute-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-                        </svg>
-                        <svg class="unmute-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                            <path d="M3.63 3.63a.996.996 0 0 0 0 1.41L7.29 8.7 7 9H4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h3l3.29 3.29c.63.63 1.71.18 1.71-.71v-4.17l4.18 4.18c-.49.37-1.02.68-1.6.91-.36.15-.58.53-.58.92 0 .72.73 1.18 1.39.91.8-.33 1.55-.77 2.22-1.31l1.34 1.34a.996.996 0 1 0 1.41-1.41L5.05 3.63c-.39-.39-1.02-.39-1.42 0zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zm-7-8.94v2.02l2.01 2.01c-1.54-.94-3.31-1.52-5.01-1.79v1.8h2.01c.57.81 1.07 1.7 1.46 2.59l2.84 2.84c.7-.98 1.24-2.05 1.58-3.21L12 3.06z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <video src="video/reel4.mp4" loop playsinline preload="metadata"></video>
-                    <button class="video-control play-pause" aria-label="Play/Pause">
-                        <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M8 5v14l11-7z"/>
-                        </svg>
-                        <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                        </svg>
-                    </button>
-                    <button class="video-control mute-unmute" aria-label="Mute/Unmute">
-                        <svg class="mute-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-                        </svg>
-                        <svg class="unmute-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                            <path d="M3.63 3.63a.996.996 0 0 0 0 1.41L7.29 8.7 7 9H4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h3l3.29 3.29c.63.63 1.71.18 1.71-.71v-4.17l4.18 4.18c-.49.37-1.02.68-1.6.91-.36.15-.58.53-.58.92 0 .72.73 1.18 1.39.91.8-.33 1.55-.77 2.22-1.31l1.34 1.34a.996.996 0 1 0 1.41-1.41L5.05 3.63c-.39-.39-1.02-.39-1.42 0zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zm-7-8.94v2.02l2.01 2.01c-1.54-.94-3.31-1.52-5.01-1.79v1.8h2.01c.57.81 1.07 1.7 1.46 2.59l2.84 2.84c.7-.98 1.24-2.05 1.58-3.21L12 3.06z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <video src="video/reel5.mp4" loop playsinline preload="metadata"></video>
-                    <button class="video-control play-pause" aria-label="Play/Pause">
-                        <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M8 5v14l11-7z"/>
-                        </svg>
-                        <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                        </svg>
-                    </button>
-                    <button class="video-control mute-unmute" aria-label="Mute/Unmute">
-                        <svg class="mute-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-                        </svg>
-                        <svg class="unmute-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                            <path d="M3.63 3.63a.996.996 0 0 0 0 1.41L7.29 8.7 7 9H4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h3l3.29 3.29c.63.63 1.71.18 1.71-.71v-4.17l4.18 4.18c-.49.37-1.02.68-1.6.91-.36.15-.58.53-.58.92 0 .72.73 1.18 1.39.91.8-.33 1.55-.77 2.22-1.31l1.34 1.34a.996.996 0 1 0 1.41-1.41L5.05 3.63c-.39-.39-1.02-.39-1.42 0zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zm-7-8.94v2.02l2.01 2.01c-1.54-.94-3.31-1.52-5.01-1.79v1.8h2.01c.57.81 1.07 1.7 1.46 2.59l2.84 2.84c.7-.98 1.24-2.05 1.58-3.21L12 3.06z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <video src="video/reel6.mp4" loop playsinline preload="metadata"></video>
-                    <button class="video-control play-pause" aria-label="Play/Pause">
-                        <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M8 5v14l11-7z"/>
-                        </svg>
-                        <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                        </svg>
-                    </button>
-                    <button class="video-control mute-unmute" aria-label="Mute/Unmute">
-                        <svg class="mute-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-                        </svg>
-                        <svg class="unmute-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                            <path d="M3.63 3.63a.996.996 0 0 0 0 1.41L7.29 8.7 7 9H4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h3l3.29 3.29c.63.63 1.71.18 1.71-.71v-4.17l4.18 4.18c-.49.37-1.02.68-1.6.91-.36.15-.58.53-.58.92 0 .72.73 1.18 1.39.91.8-.33 1.55-.77 2.22-1.31l1.34 1.34a.996.996 0 1 0 1.41-1.41L5.05 3.63c-.39-.39-1.02-.39-1.42 0zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zm-7-8.94v2.02l2.01 2.01c-1.54-.94-3.31-1.52-5.01-1.79v1.8h2.01c.57.81 1.07 1.7 1.46 2.59l2.84 2.84c.7-.98 1.24-2.05 1.58-3.21L12 3.06z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <video src="video/reel7.mp4" loop playsinline preload="metadata"></video>
-                    <button class="video-control play-pause" aria-label="Play/Pause">
-                        <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M8 5v14l11-7z"/>
-                        </svg>
-                        <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                        </svg>
-                    </button>
-                    <button class="video-control mute-unmute" aria-label="Mute/Unmute">
-                        <svg class="mute-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-                        </svg>
-                        <svg class="unmute-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                            <path d="M3.63 3.63a.996.996 0 0 0 0 1.41L7.29 8.7 7 9H4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h3l3.29 3.29c.63.63 1.71.18 1.71-.71v-4.17l4.18 4.18c-.49.37-1.02.68-1.6.91-.36.15-.58.53-.58.92 0 .72.73 1.18 1.39.91.8-.33 1.55-.77 2.22-1.31l1.34 1.34a.996.996 0 1 0 1.41-1.41L5.05 3.63c-.39-.39-1.02-.39-1.42 0zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zm-7-8.94v2.02l2.01 2.01c-1.54-.94-3.31-1.52-5.01-1.79v1.8h2.01c.57.81 1.07 1.7 1.46 2.59l2.84 2.84c.7-.98 1.24-2.05 1.58-3.21L12 3.06z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <video src="video/reel8.mp4" loop playsinline preload="metadata"></video>
-                    <button class="video-control play-pause" aria-label="Play/Pause">
-                        <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M8 5v14l11-7z"/>
-                        </svg>
-                        <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                        </svg>
-                    </button>
-                    <button class="video-control mute-unmute" aria-label="Mute/Unmute">
-                        <svg class="mute-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-                        </svg>
-                        <svg class="unmute-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                            <path d="M3.63 3.63a.996.996 0 0 0 0 1.41L7.29 8.7 7 9H4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h3l3.29 3.29c.63.63 1.71.18 1.71-.71v-4.17l4.18 4.18c-.49.37-1.02.68-1.6.91-.36.15-.58.53-.58.92 0 .72.73 1.18 1.39.91.8-.33 1.55-.77 2.22-1.31l1.34 1.34a.996.996 0 1 0 1.41-1.41L5.05 3.63c-.39-.39-1.02-.39-1.42 0zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zm-7-8.94v2.02l2.01 2.01c-1.54-.94-3.31-1.52-5.01-1.79v1.8h2.01c.57.81 1.07 1.7 1.46 2.59l2.84 2.84c.7-.98 1.24-2.05 1.58-3.21L12 3.06z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <video src="video/reel9.mp4" loop playsinline preload="metadata"></video>
-                    <button class="video-control play-pause" aria-label="Play/Pause">
-                        <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M8 5v14l11-7z"/>
-                        </svg>
-                        <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                        </svg>
-                    </button>
-                    <button class="video-control mute-unmute" aria-label="Mute/Unmute">
-                        <svg class="mute-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-                        </svg>
-                        <svg class="unmute-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                            <path d="M3.63 3.63a.996.996 0 0 0 0 1.41L7.29 8.7 7 9H4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h3l3.29 3.29c.63.63 1.71.18 1.71-.71v-4.17l4.18 4.18c-.49.37-1.02.68-1.6.91-.36.15-.58.53-.58.92 0 .72.73 1.18 1.39.91.8-.33 1.55-.77 2.22-1.31l1.34 1.34a.996.996 0 1 0 1.41-1.41L5.05 3.63c-.39-.39-1.02-.39-1.42 0zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zm-7-8.94v2.02l2.01 2.01c-1.54-.94-3.31-1.52-5.01-1.79v1.8h2.01c.57.81 1.07 1.7 1.46 2.59l2.84 2.84c.7-.98 1.24-2.05 1.58-3.21L12 3.06z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <video src="video/reel1.mp4" loop playsinline preload="metadata"></video>
-                    <button class="video-control play-pause" aria-label="Play/Pause">
-                        <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M8 5v14l11-7z"/>
-                        </svg>
-                        <svg class="pause-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                        </svg>
-                    </button>
-                    <button class="video-control mute-unmute" aria-label="Mute/Unmute">
-                        <svg class="mute-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
-                        </svg>
-                        <svg class="unmute-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
-                            <path d="M3.63 3.63a.996.996 0 0 0 0 1.41L7.29 8.7 7 9H4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h3l3.29 3.29c.63.63 1.71.18 1.71-.71v-4.17l4.18 4.18c-.49.37-1.02.68-1.6.91-.36.15-.58.53-.58.92 0 .72.73 1.18 1.39.91.8-.33 1.55-.77 2.22-1.31l1.34 1.34a.996.996 0 1 0 1.41-1.41L5.05 3.63c-.39-.39-1.02-.39-1.42 0zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.17.88-2.48.88-3.87 0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zm-7-8.94v2.02l2.01 2.01c-1.54-.94-3.31-1.52-5.01-1.79v1.8h2.01c.57.81 1.07 1.7 1.46 2.59l2.84 2.84c.7-.98 1.24-2.05 1.58-3.21L12 3.06z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <video src="video/reel1.mp4" loop playsinline preload="metadata"></video>
+                    <video src="poze sofran galerie/IMG_9478.MOV" loop playsinline preload="metadata"></video>
                     <button class="video-control play-pause" aria-label="Play/Pause">
                         <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M8 5v14l11-7z"/>
@@ -1084,16 +983,15 @@
                         <label for="quantity" data-i18n="purchase.quantity">Cantitate</label>
                         <select id="quantity" name="quantity" class="form-input" required>
                             <option value="" data-i18n="purchase.selectQuantity">Selectează cantitatea</option>
-                            <option value="0.1g" data-price="10">0.1g - €10</option>
-                            <option value="0.25g" data-price="20">0.25g - €20</option>
-                            <option value="0.5g" data-price="30">0.5g - €30</option>
-                            <option value="1g" data-price="50" selected>1g - €50</option>
+                            <option value="0.25g" data-price="40">0.25g - €40</option>
+                            <option value="0.5g" data-price="60">0.50g - €60</option>
+                            <option value="1g" data-price="90" selected>1g - €90</option>
                         </select>
                     </div>
                     
                     <div class="form-group">
                         <label data-i18n="purchase.totalPrice">Preț total</label>
-                        <div class="price-display" id="formPriceDisplay">€50</div>
+                        <div class="price-display" id="formPriceDisplay">€90</div>
                     </div>
                     
                     <div class="form-group">
