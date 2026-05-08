@@ -27,6 +27,14 @@ if (document.body) {
     document.body.classList.add('loader-active');
 }
 
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+window.addEventListener('load', () => {
+    window.scrollTo(0, 0);
+});
+
 function initPremiumLoader() {
     const loader = document.getElementById('premiumLoader');
     if (!loader) return;
