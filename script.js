@@ -955,6 +955,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const grid = document.getElementById('premiumGalleryGrid');
     const thumbsTrack = document.getElementById('premiumGalleryThumbsTrack');
     const thumbsViewport = document.getElementById('premiumGalleryThumbsViewport');
+    const filterButtons = Array.from(document.querySelectorAll('.premium-gallery-showcase__filter[data-gallery-filter]'));
     const heroImg = document.getElementById('premiumGalleryHeroImg');
     const heroCard = document.querySelector('.premium-gallery-showcase__hero-card');
     const expandBtn = document.getElementById('premiumGalleryExpand');
@@ -971,9 +972,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const bootstrapImgs = Array.from(grid.querySelectorAll(':scope > img'));
     if (bootstrapImgs.length === 0) return;
 
-    const images = bootstrapImgs.map((img) => ({
+    const allImages = bootstrapImgs.map((img) => ({
         src: img.getAttribute('src'),
         alt: img.getAttribute('alt') || '',
+        category: img.getAttribute('data-category') || 'all',
     }));
 
     bootstrapImgs.forEach((img) => img.remove());
@@ -981,45 +983,49 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     /** @type {HTMLButtonElement[]} */
-    const thumbButtons = [];
-
-    images.forEach((item, idx) => {
-        const thumb = document.createElement('button');
-        thumb.type = 'button';
-        thumb.className = 'premium-gallery-showcase__thumb';
-        thumb.dataset.photoIndex = String(idx);
-        thumb.setAttribute('role', 'option');
-        thumb.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
-
-        const im = document.createElement('img');
-        im.src = item.src;
-        im.alt = item.alt || '';
-        im.loading = idx < 14 ? 'eager' : 'lazy';
-        im.decoding = 'async';
-
-        thumb.appendChild(im);
-        thumbsTrack.appendChild(thumb);
-        thumbButtons.push(thumb);
-
-        thumb.addEventListener('click', () => setGalleryIndex(idx));
-        thumb.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                setGalleryIndex(idx);
-            }
-        });
-    });
+    let thumbButtons = [];
 
     thumbsViewport?.setAttribute('role', 'listbox');
 
-    const countEl = document.getElementById('premiumPhotoCountTotal');
-    if (countEl) countEl.textContent = String(images.length);
-
-    refreshPremiumGalleryAria();
-
+    let activeCategory = 'all';
+    let images = allImages.slice();
     let currentIndex = 0;
     let lightboxIndex = 0;
     let lightboxLaunchFocus = null;
+
+    function renderThumbs() {
+        thumbsTrack.innerHTML = '';
+        thumbButtons = [];
+
+        images.forEach((item, idx) => {
+            const thumb = document.createElement('button');
+            thumb.type = 'button';
+            thumb.className = 'premium-gallery-showcase__thumb';
+            thumb.dataset.photoIndex = String(idx);
+            thumb.setAttribute('role', 'option');
+            thumb.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
+
+            const im = document.createElement('img');
+            im.src = item.src;
+            im.alt = item.alt || '';
+            im.loading = idx < 12 ? 'eager' : 'lazy';
+            im.decoding = 'async';
+
+            thumb.appendChild(im);
+            thumbsTrack.appendChild(thumb);
+            thumbButtons.push(thumb);
+
+            thumb.addEventListener('click', () => setGalleryIndex(idx));
+            thumb.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setGalleryIndex(idx);
+                }
+            });
+        });
+
+        refreshPremiumGalleryAria();
+    }
 
     function scrollBehavior() {
         return prefersReducedMotion ? 'auto' : 'smooth';
@@ -1057,7 +1063,40 @@ document.addEventListener('DOMContentLoaded', function() {
         scrollActiveThumbIntoView();
     }
 
-    setGalleryIndex(0);
+    function setCategory(category) {
+        activeCategory = category;
+        images =
+            activeCategory === 'all'
+                ? allImages.slice()
+                : allImages.filter((item) => item.category === activeCategory);
+
+        filterButtons.forEach((btn) => {
+            const on = btn.dataset.galleryFilter === activeCategory;
+            btn.classList.toggle('is-active', on);
+            btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+
+        if (images.length === 0) {
+            heroImg.removeAttribute('src');
+            heroImg.alt = 'Nu există imagini în această categorie';
+            thumbsTrack.innerHTML = '';
+            thumbButtons = [];
+            return;
+        }
+
+        renderThumbs();
+        setGalleryIndex(0);
+    }
+
+    filterButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const selectedCategory = btn.dataset.galleryFilter || 'all';
+            if (selectedCategory === activeCategory) return;
+            setCategory(selectedCategory);
+        });
+    });
+
+    setCategory('all');
 
     if (expandBtn) {
         expandBtn.setAttribute('aria-haspopup', 'dialog');
@@ -1129,7 +1168,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function openLightbox(index) {
         lightboxIndex = index;
-        if (lightboxIndex < 0 || lightboxIndex >= images.length) return;
+        if (images.length === 0 || lightboxIndex < 0 || lightboxIndex >= images.length) return;
         setGalleryIndex(lightboxIndex);
         lightboxLaunchFocus = document.activeElement;
         updateLightboxImage();
@@ -1159,11 +1198,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function nextLightboxImage() {
+        if (images.length === 0) return;
         lightboxIndex = (lightboxIndex + 1) % images.length;
         updateLightboxImage();
     }
 
     function prevLightboxImage() {
+        if (images.length === 0) return;
         lightboxIndex = (lightboxIndex - 1 + images.length) % images.length;
         updateLightboxImage();
     }
